@@ -1,0 +1,44 @@
+.popup.open {
+    opacity: 1;
+}
+.form-input {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    background-color: darkgrey;
+    width: 247px;
+    height: 380px;
+    padding: 1rem;
+    border-radius: 10px;
+}
+fieldset {
+    display: flex;
+    padding: 1rem;
+}
+input {
+    border: none;
+    width: 185px;
+    height: 32px;
+    border-radius: 5px;
+    padding-inline-start: 1rem;
+}
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+button {
+    width: 70px;
+}
+
+.modal {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    background-color: aquamarine;
+    display: block;
+    width: 230px;
+    height: 215px;
+    padding: 2rem;
+    border-radius: 20px;
+}
