@@ -21,13 +21,29 @@ async function fetchPerson() {
 async function displayList(){
         const personList = await fetchPerson();
         tbody.innerHTML = personList
-            .map(person =>`
+            .map(person => {
+                    function nth(day) {
+                        if (day > 3 && day < 21) return 'th';
+                        switch (day % 10) {
+                          case 1:  return "st";
+                          case 2:  return "nd";
+                          case 3:  return "rd";
+                          default: return "th";
+                        }
+                      }
+                      let current_datetime = new Date(person.birthday);
+                      const date = current_datetime.getDate();
+                      const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
+                        let today = new Date();
+                        let age = today.getFullYear() - current_datetime.getFullYear();
+                    
+                    return `
                     <tr data-id="${person.id}">
-                        <td><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></td>
+                        <th scope="row"><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></th>
                         <td class="text-white">${person.lastName}</td>
                         <td class="text-white">${person.firstName}</td>
-                        <td class="text-white">Turns to ${person.birthday} on</td>
-                        <td class="text-white">Date computaion</td>
+                        <td class="text-white">Turns ${age} on ${month} ${date}<sup>${nth(date)}</sup></td>
+                        <td class="text-white"> Days</td>
                         <td class="text-white">
                             <button type="button" class="edit btn bg-warning" value="${person.id}">
                               Edit
@@ -38,8 +54,8 @@ async function displayList(){
                                 Delete
                             </button>
                         </td>
-                    </tr>
-    `)
+                    </tr>`
+            })
             .join('');
     };
 
@@ -49,7 +65,7 @@ async function displayList(){
             e.preventDefault();
             const findTr = e.target.closest('tr');
             const btn = findTr.querySelector('.edit')
-            const id = btn.value
+            const id = btn.value;
             editPopup(id);
         }
     }
@@ -112,7 +128,8 @@ async function displayList(){
             // Listen to the submit button to save the changes
             popup.addEventListener('submit', (e) => {
                 e.preventDefault();
-                // resolve(e.target.input.value);
+                const popup = e.target;
+                resolve(popup.value);
                 // const form = e.target;
                 person.lastName = popup.lastName.value;
                 person.firstName = popup.firstName.value;
@@ -179,4 +196,5 @@ const deletePopup = (id) => {
     
  tbody.addEventListener('click', editPerson);
  tbody.addEventListener('click', deletePerson);
+ 
 displayList();
