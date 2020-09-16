@@ -30,6 +30,11 @@ input {
 button {
     width: 70px;
 }
+.confirm-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 .modal {
     position: fixed;
@@ -41,4 +46,8 @@ button {
     height: 215px;
     padding: 2rem;
     border-radius: 20px;
+}
+img {
+    border-radius: 50px;
+    width: 100px;
 }
