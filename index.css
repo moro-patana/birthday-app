@@ -3,11 +3,11 @@
 }
 .form-input {
     position: fixed;
-    top: 30%;
+    top: 20%;
     left: 50%;
     background-color: darkgrey;
     width: 247px;
-    height: 380px;
+    height: 460px;
     padding: 1rem;
     border-radius: 10px;
 }
