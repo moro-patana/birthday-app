@@ -9,7 +9,7 @@ const addBtn = document.querySelector(`.add`);
 // Async function to destroy popup
 async function destroyPopup(popup) {
 	popup.classList.remove('open');
-	await wait(1000);
+	await wait(200);
 	popup.remove();
 	popup = null;
 }
@@ -52,7 +52,7 @@ async function fetchPerson() {
                   let birthdayYear = new Date(yearNow, month, day);
                   let aDay = 1000*60*60*24;
                   let countDay = Math.ceil((birthdayYear.getTime() - today.getTime())/ aDay);
-
+                
                 // Create table row
                 return `<tr data-id="${person.id}">
                     <th scope="row"><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></th>
@@ -99,7 +99,6 @@ async function fetchPerson() {
         console.log(id);
         return new Promise(async function (resolve, reject) {
             const person = data.find(person => person.id == id);
-
 // Create form element to edit the list
             const popup = document.createElement(`form`);
             popup.classList.add('popup');
@@ -157,7 +156,7 @@ async function fetchPerson() {
             window.addEventListener('click', e => {
                 if (e.target.closest('button.cancel')) {
                     destroyPopup(popup);
-                    // tbody.dispatchEvent(new CustomEvent('listUpdated'));
+                    
                 }
             })
     
@@ -188,6 +187,8 @@ async function fetchPerson() {
           const tableRow = e.target.closest('tr');
           const id = tableRow.dataset.id;
           deletePopup(id);
+          tbody.dispatchEvent(new CustomEvent('listUpdated'));
+          
         }
 
     };
@@ -214,7 +215,6 @@ const deletePopup = (id) => {
                         data = personToDelete;
                         displayList(personToDelete);
                         destroyPopup(modal);
-                        tbody.dispatchEvent(new CustomEvent('listUpdated'));
                     }
                 })
                 window.addEventListener('click', e => {
@@ -229,7 +229,6 @@ const deletePopup = (id) => {
     const addList = (e) => {
         if (e.target.closest('button.add')) {
             addListPopup();
-            tbody.dispatchEvent(new CustomEvent('listUpdated'));
         }
     }
     const addListPopup = (e) => {
@@ -316,6 +315,7 @@ const updateLocalStorage = () => {
  tbody.addEventListener('click', deletePerson);
  addBtn.addEventListener('click', addList);
  tbody.addEventListener('listUpdated', updateLocalStorage);
+
  initLocalStorage();
 
  }
