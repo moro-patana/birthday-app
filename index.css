@@ -1,3 +1,6 @@
+.add-newlist {
+    padding: 1rem;
+}
 .popup.open {
     opacity: 1;
 }
