@@ -31,9 +31,10 @@ async function fetchPerson() {
                   let date = current_datetime.getDate();
                   let year = current_datetime.getFullYear();
                   let month = current_datetime.getMonth();
+                  let birthMonth = month + 1;
                   let day = current_datetime.getDay();
-                  let fullDate = year + "/" + month + "/" + day;
-                  let YearMonth = [null, "January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
+                  let fullDate = year + "/" + birthMonth + "/" + day;
+                  let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
                   let today = new Date();
                   let age = today.getFullYear() - year;
 
@@ -82,6 +83,7 @@ async function fetchPerson() {
     }
     // Create an form html to edit the parteners profile
     const editPopup = (id) => {
+        console.log(id);
         return new Promise(async function (resolve, reject) {
             const person = data.find(person => person.id == id);
             console.log(person);
