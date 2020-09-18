@@ -2,22 +2,27 @@ const basepoint = './people.json';
 function wait(ms = 0) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
-
+// Grab elements
 const tbody = document.querySelector('tbody');
+const addBtn = document.querySelector(`.add`);
+
+// Async function to destroy popup
 async function destroyPopup(popup) {
 	popup.classList.remove('open');
 	await wait(1000);
 	popup.remove();
 	popup = null;
 }
-const addBtn = document.querySelector(`.add`);
+// Fetch data from people.json
 async function fetchPerson() {
     const response = await fetch(basepoint);
     let data = await response.json();
     const storedHTML = (personList) => {
-        // console.log(personList)
+// Map through the data
         return personList
         .map(person => {
+
+// Condition to check if the day should take th, st, nd, or rd
                 function nth(day) {
                     if (day > 3 && day < 21) return 'th';
                     switch (day % 10) {
@@ -27,21 +32,28 @@ async function fetchPerson() {
                       default: return "th";
                     }
                   }
+                // Take the birthday date from the data
                   let current_datetime = new Date(person.birthday);
                   let date = current_datetime.getDate();
                   let year = current_datetime.getFullYear();
                   let month = current_datetime.getMonth();
+                // Add 1 to the month so that the array will not start at 0
                   let birthMonth = month + 1;
                   let day = current_datetime.getDay();
                   let fullDate = year + "/" + birthMonth + "/" + day;
                   let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
+
+                // Calculate ages based on the birthday year
                   let today = new Date();
                   let age = today.getFullYear() - year;
 
+                // Calculate days number between Date.now() and the birthday months and day
                   let yearNow = today.getFullYear();
                   let birthdayYear = new Date(yearNow, month, day);
                   let aDay = 1000*60*60*24;
-                  let countDay = Math.ceil((birthdayYear.getTime() - today.getTime())/ aDay)
+                  let countDay = Math.ceil((birthdayYear.getTime() - today.getTime())/ aDay);
+
+                // Create table row
                 return `<tr data-id="${person.id}">
                     <th scope="row"><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></th>
                     <td class="text-white">${person.lastName}</td>
@@ -69,6 +81,7 @@ async function fetchPerson() {
     };
     displayList();
 
+// Grab the edit button
     const editPerson = (e) => {
         const editBtn = e.target.closest('button.edit');
         if (editBtn) {
@@ -81,12 +94,13 @@ async function fetchPerson() {
             
         }
     }
-    // Create an form html to edit the parteners profile
+    // Create an form html to edit the list 
     const editPopup = (id) => {
         console.log(id);
         return new Promise(async function (resolve, reject) {
             const person = data.find(person => person.id == id);
-            console.log(person);
+
+// Create form element to edit the list
             const popup = document.createElement(`form`);
             popup.classList.add('popup');
             popup.innerHTML = `
@@ -139,7 +153,7 @@ async function fetchPerson() {
                 </div>
 `;
 
-            // Create skip button and appendchild it to the popup
+            // listen to the window and the cancel button
             window.addEventListener('click', e => {
                 if (e.target.closest('button.cancel')) {
                     destroyPopup(popup);
@@ -150,7 +164,6 @@ async function fetchPerson() {
             // Listen to the submit button to save the changes
             popup.addEventListener('submit', (e) => {
                 e.preventDefault();
-                // const form = e.target;
                 person.picture = popup.picture.value;
                 person.lastName = popup.lastName.value;
                 person.firstName = popup.firstName.value,
@@ -158,7 +171,6 @@ async function fetchPerson() {
                 person.id = popup.id.value,
 
                 destroyPopup(popup);
-                // resolve(e.currentTarget.remove());
                 displayList(person);
                 tbody.dispatchEvent(new CustomEvent('listUpdated'));
 
@@ -170,7 +182,7 @@ async function fetchPerson() {
             popup.classList.add('open');
         })
     }
-    
+// Find the delete button and the table row
     const deletePerson = (e) => {
         if (e.target.closest('button.delete')) {
           const tableRow = e.target.closest('tr');
@@ -195,7 +207,7 @@ const deletePopup = (id) => {
                 `;
                 document.body.appendChild(modal);
                 modal.classList.add('open');
-
+// Listen to the yes button and the no button
                 window.addEventListener('click', (e) => {
                     if (e.target.closest('button.yes')) {
                         const personToDelete = data.filter(person => person.id != id);
@@ -203,7 +215,6 @@ const deletePopup = (id) => {
                         displayList(personToDelete);
                         destroyPopup(modal);
                         tbody.dispatchEvent(new CustomEvent('listUpdated'));
-                        // tbody.dispatchEvent(new CustomEvent('listUpdated'));
                     }
                 })
                 window.addEventListener('click', e => {
@@ -218,7 +229,7 @@ const deletePopup = (id) => {
     const addList = (e) => {
         if (e.target.closest('button.add')) {
             addListPopup();
-            // tbody.dispatchEvent(new CustomEvent('listUpdated'));
+            tbody.dispatchEvent(new CustomEvent('listUpdated'));
         }
     }
     const addListPopup = (e) => {
@@ -232,7 +243,7 @@ const deletePopup = (id) => {
                 type="url"
                 name="profile"
                 id="profile"
-                placeholder="url"
+                value="https://bit.ly/3mxlBiG"
             />
             </fieldset>
 
@@ -242,7 +253,7 @@ const deletePopup = (id) => {
                         type="text"
                         name="lastname"
                         id="lastname"
-                        placeholder="lastname"
+                        value="Manjaka"
                     />
                 </fieldset>
                 <fieldset>
@@ -251,7 +262,7 @@ const deletePopup = (id) => {
                     type="text"
                     name="firstname"
                     id="firstname"
-                    placeholder="firstname"
+                    value="Delancy"
                 />
                 </fieldset>
                 <fieldset>
@@ -260,7 +271,7 @@ const deletePopup = (id) => {
                     type="date"
                     name="birthdate"
                     id="birthdate"
-                    placeholder="birthday"
+                    value="14/09/1998"
                 />
                 </fieldset>
                 <div class="button">
@@ -296,10 +307,11 @@ const initLocalStorage = () => {
     }
     tbody.dispatchEvent(new CustomEvent('listUpdated'));
 }
+// set the data in the local storage and stringify it
 const updateLocalStorage = () => {
     localStorage.setItem('data', JSON.stringify(data))
 }
-
+// Envent listners
  tbody.addEventListener('click', editPerson);
  tbody.addEventListener('click', deletePerson);
  addBtn.addEventListener('click', addList);
