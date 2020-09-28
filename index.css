@@ -1,5 +1,10 @@
+h1 {
+    text-align: center;
+    color: darkred;
+}
 .add-newlist {
     padding: 1rem;
+    margin-top: 1rem;
 }
 .popup.open {
     opacity: 1;
@@ -53,4 +58,23 @@ button {
 img {
     border-radius: 50px;
     width: 100px;
+}
+.filter-songs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+header {
+    padding: 2rem;
+}
+.container-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: bisque;
+}
+.reset-filters {
+    width: 115px;
+    height: 50px;
+    margin-top: 1rem;
 }
