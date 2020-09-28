@@ -1,42 +1,42 @@
 # Term 3 JS Project : Birthday App
 
-Hey team! So the final project here will be a birthday list.
+## Structure:
+ 1. Declare the path where I fetch the data.
 
-We have a list of persons. The app will show us whose person is the closest to have their birthday.
+ 2. Set timeout to the wait function when it resolves in milliseconds(ms).
 
-You have a file in the project called person.json. It contains a list of persons, and we want to add all those persons to our birthday list app.
+ 3. Grab necessary elements wich are in my html(tbody and add button).
 
-The first time you launch the app, it should fetch all the data from the people.json local file. You can use fetch for that, it also works with local files.
+ 4. I created an async function to destroy the popup when the promise resolves.
 
-Once they are loaded in the app, you can save them on localstorage, and you don't need to work with the json file anymore.
+ 5. Fetch the data from the basepoint and sort it by the lastname.
 
-The app will show the list of people, sorted by the ones who will have their birthday the soonest.
+ 6. Map through the data to create an html.
 
-![assets/Screenshot_2020-09-12_at_16.57.18.png](assets/Screenshot_2020-09-12_at_16.57.18.png)
+ 7. Use swich to use superscipt th, st, nd or rd with the date.
 
-The screenshot is just an example of a possible layout. Feel free to create a custom layout with boostrap if you want to.
+ 8. Get the birthdate to calculate person ages and to know their birthday(already gone or still in the future).
 
-The users will be able to add a new element on the list (only on the app list localstorage, not on the json). Here are the fields :
+ 9. Create popup to add, edit and to delete item from the data.
 
--   first name
--   last name
--   birthday (datepicker)
--   an url for their avatar image
--   an id for handling the operations on the objects. (no need to add that on the form)
+ 10. Store the data in the local storage so every time I make changes, they will change from the local storage as well.
 
-The users should be able to edit an element on the list. When you click the edit button, a modal should appear with a form inside, to edit any attribute.
+ ## Improvement:
+  This time, I fell confident to use local storage and create popup.
 
-The users should be able to delete an element. There will be a modal that will ask if you're sure to delete the element.
+## Lessons:
+- We can not sort the data unless we put it before the map.
+- We can store all of my function inside the fetch function.
 
-Every action should be persisted into the local storage.
+## Challenge:
+- To fetch the data at the bigging(parcel does not work).
+- To use date-fns(I can not import it.)
 
-Here is the package you should use for handling date computations. Add it as a dependency of your project
+## More explanation:
+I really need more explanation on how to import file from anothe file.
+e.g: How to divided my code into 3 or more files but all of my code are inside a big function.
 
-[https://date-fns.org/v1.29.0/docs/differenceInYears](https://date-fns.org/v1.29.0/docs/differenceInYears)
+## NB: 
+It helps us to do more research and looking for another solution if the other does not work properly.
 
-Again, try to make a plan, by dividing big tasks into smaller ones.
-You have the whole week to work on it. You can collaborate with other students, but copy/pasting code is forbidden.
-Once you're finished with the functionality, try to make your app more appealing with css and other tricks.
-Be creative 🎨
-
-Good Luck
+Thank you so much!
