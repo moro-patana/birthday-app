@@ -18,6 +18,14 @@ async function fetchPerson() {
     const response = await fetch(basepoint);
     let data = await response.json();
     const storedHTML = (personList) => {
+        data.sort((a, b) => {
+            if (a === b) {
+              return 0;
+            }
+            return a.lastName < b.lastName ? -1 : 1;
+          });
+          data;
+    
 // Map through the data
         return personList
         .map(person => {
@@ -230,7 +238,9 @@ const deletePopup = (id) => {
         if (e.target.closest('button.add')) {
             addListPopup();
         }
+        
     }
+
     const addListPopup = (e) => {
         const newPopupList = document.createElement(`form`);
         newPopupList.classList.add('AddListPopup');
@@ -279,6 +289,13 @@ const deletePopup = (id) => {
                 </div>
             </div>
 `;
+window.addEventListener('click', e => {
+    if (e.target.closest('button.cancel')) {
+        destroyPopup(newPopupList);
+        
+    }
+})
+
 document.body.appendChild(newPopupList);
 newPopupList.classList.add('open');
 newPopupList.addEventListener('submit', e => {
@@ -297,6 +314,7 @@ newPopupList.addEventListener('submit', e => {
     tbody.dispatchEvent(new CustomEvent('listUpdated'));
 })
     }
+
 
 const initLocalStorage = () => {
     const dataList = JSON.parse(localStorage.getItem('data'));
