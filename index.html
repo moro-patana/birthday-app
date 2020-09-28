@@ -9,10 +9,42 @@
 	    <link rel="stylesheet" href="./index.css">
 	</head>
 	<body>
-		<h1>Birthday App</h1>
+		<header class="bg-primary">
+		   <h1>Birthday App</h1>
+		</header>
+		<div class="container-form">
 		<div class="add-newlist">
 			<button class="btn btn-danger add">Add</button>
 		</div>
+		<div class="filter">
+			<form class="filter-songs">
+				<fieldset>
+					<label for="filter-lastname">Lastname:</label>
+					<input type="text" id="filter-lastname" placeholder="Filter by Lastname">
+				</fieldset>
+				<fieldset>
+					<label for="filter-month">Birth month:</label>
+					<select id="filter-month">
+						<option value="January">January</option>
+						<option value="February">February</option>
+						<option value="March">March</option>
+						<option value="April">April</option>
+						<option value="May">May</option>
+						<option value="June">June</option>
+						<option value="Jolay">Jolay</option>
+						<option value="August">August</option>
+						<option value="September">September</option>
+						<option value="October">October</option>
+						<option value="November">November</option>
+						<option value="December">December</option>
+					</select>
+				</fieldset>
+				<fieldset>
+					<button type="button" class="btn btn-primary reset-filters">Reset filters</button>
+				</fieldset>
+			</form>
+		</div>
+	</div>
 		<div class="birthday-list bg-info">
 			<table class="table">
 				<thead class="bg-secondary text-white">
