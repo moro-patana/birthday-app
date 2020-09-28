@@ -5,6 +5,11 @@ function wait(ms = 0) {
 // Grab elements
 const tbody = document.querySelector('tbody');
 const addBtn = document.querySelector(`.add`);
+const filterLastNameInput = document.querySelector('#filter-lastname');
+const filterMonthInput = document.querySelector('#filter-month');
+const filterForm = document.querySelector('.filter-person');
+const resetFiltersBtn = document.querySelector('.reset-filters');
+
 
 // Async function to destroy popup
 async function destroyPopup(popup) {
@@ -25,7 +30,6 @@ async function fetchPerson() {
             return a.lastName < b.lastName ? -1 : 1;
           });
           data;
-    
 // Map through the data
         return personList
         .map(person => {
@@ -122,7 +126,6 @@ async function fetchPerson() {
                     ="${person.picture}"
                 />
                 </fieldset>
-
                     <fieldset>
                         <label for="lastName">Lastname</label>
                         <input
@@ -238,9 +241,7 @@ const deletePopup = (id) => {
         if (e.target.closest('button.add')) {
             addListPopup();
         }
-        
     }
-
     const addListPopup = (e) => {
         const newPopupList = document.createElement(`form`);
         newPopupList.classList.add('AddListPopup');
@@ -255,7 +256,6 @@ const deletePopup = (id) => {
                 value="https://bit.ly/3mxlBiG"
             />
             </fieldset>
-
                 <fieldset>
                     <label for="lastname">Lastname</label>
                     <input
@@ -289,13 +289,6 @@ const deletePopup = (id) => {
                 </div>
             </div>
 `;
-window.addEventListener('click', e => {
-    if (e.target.closest('button.cancel')) {
-        destroyPopup(newPopupList);
-        
-    }
-})
-
 document.body.appendChild(newPopupList);
 newPopupList.classList.add('open');
 newPopupList.addEventListener('submit', e => {
@@ -315,7 +308,6 @@ newPopupList.addEventListener('submit', e => {
 })
     }
 
-
 const initLocalStorage = () => {
     const dataList = JSON.parse(localStorage.getItem('data'));
     if (dataList) {
@@ -328,11 +320,24 @@ const initLocalStorage = () => {
 const updateLocalStorage = () => {
     localStorage.setItem('data', JSON.stringify(data))
 }
+const filterList = e => {
+    displayList(e, filterLastNameInput.value, filterMonthInput.value);
+};
+const resetFilters = e => {
+    filterForm.reset();
+    displayList();
+};
+
+
 // Envent listners
  tbody.addEventListener('click', editPerson);
  tbody.addEventListener('click', deletePerson);
  addBtn.addEventListener('click', addList);
  tbody.addEventListener('listUpdated', updateLocalStorage);
+ resetFiltersBtn.addEventListener('click', resetFilters);
+ filterLastNameInput.addEventListener('keyup', filterList);
+ filterMonthInput.addEventListener('change', filterList);
+
 
  initLocalStorage();
 
