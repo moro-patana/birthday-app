@@ -59,7 +59,7 @@ img {
     border-radius: 50px;
     width: 100px;
 }
-.filter-songs {
+.filter-person {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
