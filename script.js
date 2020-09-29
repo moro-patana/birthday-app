@@ -17,6 +17,7 @@ async function destroyPopup(popup) {
 	popup.remove();
 	popup = null;
 }
+
 // Fetch data from people.json
 async function fetchPerson() {
     const response = await fetch(basepoint);
@@ -29,6 +30,7 @@ async function fetchPerson() {
             return a.lastName < b.lastName ? -1 : 1;
           });
           data;
+
 // Map through the data
         return personList
         .map(person => {
@@ -99,6 +101,7 @@ async function fetchPerson() {
     const searchPerson = (e) => {
         const searchInput = filterLastNameInput.value;
         const lowerCaseFilter = searchInput.toLowerCase();
+    // Filter the data to get the lastname and turn them into lowercase
         const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
         const filterHTML = storedHTML(filterLastName);
         tbody.innerHTML = filterHTML;
@@ -106,8 +109,10 @@ async function fetchPerson() {
     const searchByBirthMonth = (e) => {
         const searchMonth = filterMonthInput.value;
         const lowerCaseMonth = searchMonth.toLowerCase();
+    // Filter the data to get the birthday and turn them into lowercase
         const filterBirthMonth = data.filter(person => {
             const birthdayMonth = new Date(person.birthday);
+    // stringify the birthdate
             const stringDate = birthdayMonth
             .toLocaleString('USA', { month: 'long' })
             
