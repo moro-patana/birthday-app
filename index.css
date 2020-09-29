@@ -73,8 +73,8 @@ header {
     justify-content: space-around;
     background-color: bisque;
 }
-.reset-filters {
+.reset {
     width: 115px;
     height: 50px;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
