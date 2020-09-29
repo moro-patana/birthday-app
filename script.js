@@ -102,12 +102,22 @@ async function fetchPerson() {
         const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
         const filterHTML = storedHTML(filterLastName);
         tbody.innerHTML = filterHTML;
-        // const searchMonth = filterMonthInput.value;
-        // const lowerCaseMonth = searchMonth.toLowerCase();
-        // const filterBirthMonth = data.filter(person => person.birthday.toLowerCase().includes(lowerCaseMonth));
-        // const filterMonthHTML = storedHTML(filterBirthMonth)
-        // tbody.innerHTML = filterMonthHTML;
-        // console.log(searchMonth.value);
+    }
+    const searchByBirthMonth = (e) => {
+        const searchMonth = filterMonthInput.value;
+        const lowerCaseMonth = searchMonth.toLowerCase();
+        const filterBirthMonth = data.filter(person => {
+            const birthdayMonth = new Date(person.birthday);
+            const stringDate = birthdayMonth
+            .toLocaleString('USA', { month: 'long' })
+            
+            return stringDate.toLowerCase().includes(lowerCaseMonth)
+        
+        })
+        
+        const filterMonthHTML = storedHTML(filterBirthMonth)
+        tbody.innerHTML = filterMonthHTML;
+
     }
 
 
@@ -352,6 +362,7 @@ const updateLocalStorage = () => {
  addBtn.addEventListener('click', addList);
  tbody.addEventListener('listUpdated', updateLocalStorage);
  filterLastNameInput.addEventListener('input', searchPerson);
+ filterMonthInput.addEventListener('input', searchByBirthMonth)
  resetBtn.addEventListener('click', resetFilters);
 
 
