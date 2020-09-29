@@ -8,8 +8,7 @@ const addBtn = document.querySelector(`.add`);
 const filterLastNameInput = document.querySelector('#filter-lastname');
 const filterMonthInput = document.querySelector('#filter-month');
 const filterForm = document.querySelector('.filter-person');
-const resetFiltersBtn = document.querySelector('.reset-filters');
-
+const resetBtn = document.querySelector('.reset');
 
 // Async function to destroy popup
 async function destroyPopup(popup) {
@@ -52,7 +51,7 @@ async function fetchPerson() {
                 // Add 1 to the month so that the array will not start at 0
                   let birthMonth = month + 1;
                   let day = current_datetime.getDay();
-                  let fullDate = year + "/" + birthMonth + "/" + day;
+                  let fullDate = year + "/" + birthMonth + "/" + date;
                   let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
 
                 // Calculate ages based on the birthday year
@@ -61,9 +60,9 @@ async function fetchPerson() {
 
                 // Calculate days number between Date.now() and the birthday months and day
                   let yearNow = today.getFullYear();
-                  let birthdayYear = new Date(yearNow, month, day);
+                  let birthdayYear = new Date(yearNow, month, date);
                   let aDay = 1000*60*60*24;
-                  let countDay = Math.ceil((birthdayYear.getTime() - today.getTime())/ aDay);
+                  let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay);
                 
                 // Create table row
                 return `<tr data-id="${person.id}">
@@ -71,8 +70,8 @@ async function fetchPerson() {
                     <td class="text-white">${person.lastName}</td>
                     <td class="text-white">${person.firstName}</td>
                     <td class="text-white">${fullDate}</td>
-                    <td class="text-white">Turns ${age} on ${YearMonth} ${day}<sup>${nth(day)}</sup></td>
-                    <td class="text-white"> ${countDay < 0 ? countDay *  -1 + " " + "days ago" : countDay + " " + "days"}</td>
+                    <td class="text-white">Turns ${age} on ${YearMonth} ${date}<sup>${nth(date)}</sup></td>
+                    <td class="text-white"> ${countDay < 0 ? countDay * -1 + " " + "days ago" : countDay + " " + "days"}</td>
                     <td class="text-white">
                         <button type="button" class="edit btn bg-warning" value="${person.id}">
                           Edit
@@ -92,6 +91,25 @@ async function fetchPerson() {
         tbody.innerHTML = html;
     };
     displayList();
+    const resetFilters = e => {
+        filterForm.reset();
+        displayList();
+    };
+
+    const searchPerson = (e) => {
+        const searchInput = filterLastNameInput.value;
+        const lowerCaseFilter = searchInput.toLowerCase();
+        const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
+        const filterHTML = storedHTML(filterLastName);
+        tbody.innerHTML = filterHTML;
+        // const searchMonth = filterMonthInput.value;
+        // const lowerCaseMonth = searchMonth.toLowerCase();
+        // const filterBirthMonth = data.filter(person => person.birthday.toLowerCase().includes(lowerCaseMonth));
+        // const filterMonthHTML = storedHTML(filterBirthMonth)
+        // tbody.innerHTML = filterMonthHTML;
+        // console.log(searchMonth.value);
+    }
+
 
 // Grab the edit button
     const editPerson = (e) => {
@@ -241,6 +259,12 @@ const deletePopup = (id) => {
         if (e.target.closest('button.add')) {
             addListPopup();
         }
+        window.addEventListener('click', e => {
+            if (e.target.closest('button.cancel')) {
+                destroyPopup(newPopupList);
+            }
+        })
+        
     }
     const addListPopup = (e) => {
         const newPopupList = document.createElement(`form`);
@@ -280,7 +304,6 @@ const deletePopup = (id) => {
                     type="date"
                     name="birthdate"
                     id="birthdate"
-                    value="14/09/1998"
                 />
                 </fieldset>
                 <div class="button">
@@ -289,6 +312,7 @@ const deletePopup = (id) => {
                 </div>
             </div>
 `;
+
 document.body.appendChild(newPopupList);
 newPopupList.classList.add('open');
 newPopupList.addEventListener('submit', e => {
@@ -320,13 +344,6 @@ const initLocalStorage = () => {
 const updateLocalStorage = () => {
     localStorage.setItem('data', JSON.stringify(data))
 }
-const filterList = e => {
-    displayList(e, filterLastNameInput.value, filterMonthInput.value);
-};
-const resetFilters = e => {
-    filterForm.reset();
-    displayList();
-};
 
 
 // Envent listners
@@ -334,9 +351,8 @@ const resetFilters = e => {
  tbody.addEventListener('click', deletePerson);
  addBtn.addEventListener('click', addList);
  tbody.addEventListener('listUpdated', updateLocalStorage);
- resetFiltersBtn.addEventListener('click', resetFilters);
- filterLastNameInput.addEventListener('keyup', filterList);
- filterMonthInput.addEventListener('change', filterList);
+ filterLastNameInput.addEventListener('input', searchPerson);
+ resetBtn.addEventListener('click', resetFilters);
 
 
  initLocalStorage();
