@@ -111,7 +111,7 @@ async function fetchPerson() {
             const stringDate = birthdayMonth
             .toLocaleString('USA', { month: 'long' })
             
-            return stringDate.toLowerCase().includes(lowerCaseMonth)
+            return stringDate.toLowerCase().includes(lowerCaseMonth);
         
         })
         
