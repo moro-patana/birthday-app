@@ -69,19 +69,19 @@ async function fetchPerson() {
                 // Create table row
                 return `<tr data-id="${person.id}">
                     <th scope="row"><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></th>
-                    <td class="text-white">${person.lastName}</td>
-                    <td class="text-white">${person.firstName}</td>
-                    <td class="text-white">${fullDate}</td>
-                    <td class="text-white">Turns ${age} on ${YearMonth} ${date}<sup>${nth(date)}</sup></td>
-                    <td class="text-white"> ${countDay < 0 ? countDay * -1 + " " + "days ago" : countDay + " " + "days"}</td>
-                    <td class="text-white">
-                        <button type="button" class="edit btn bg-warning" value="${person.id}">
-                          Edit
+                    <td>${person.lastName}</td>
+                    <td>${person.firstName}</td>
+                    <td>${fullDate}</td>
+                    <td>Turns ${age} on ${YearMonth} ${date}<sup>${nth(date)}</sup></td>
+                    <td> ${countDay < 0 ? countDay * -1 + " " + "days ago" : "after" + " " + countDay + " " + "days"}</td>
+                    <td>
+                        <button type="button" class="btn edit" value="${person.id}">
+                        <img class="icon" src="./img/edit.svg" alt="edit">
                         </button>
                     </td>
                     <td class="text-white">
-                        <button type="button" class="delete btn bg-warning" data-id="${person.id}">
-                            Delete
+                        <button type="button" class="btn delete" data-id="${person.id}">
+                        <img class="icon" src="./img/delete.svg" alt="delete">
                         </button>
                     </td>
                 </tr>`
@@ -246,8 +246,8 @@ const deletePopup = (id) => {
                 modal.innerHTML = `
                 <p class="confirm">Do you want to delete?</p>
                 <div class="confirm-btn">
-                    <button class="btn btn-primary yes">Yes</buton>
-                    <button class="btn btn-primary no">No</buton>
+                    <button class="yes">Yes</buton>
+                    <button class="no">No</buton>
                 </div>
                 `;
                 document.body.appendChild(modal);
@@ -322,8 +322,8 @@ const deletePopup = (id) => {
                 />
                 </fieldset>
                 <div class="button">
-                <button type="submit" class="btn btn-danger save">Save</button>
-                <button type="button" class="btn btn-danger cancel">Cancel</button>
+                <button type="submit" class="save">Save</button>
+                <button type="button" class="cancel">Cancel</button>
                 </div>
             </div>
 `;
