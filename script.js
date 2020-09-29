@@ -73,7 +73,7 @@ async function fetchPerson() {
                     <td>${person.firstName}</td>
                     <td>${fullDate}</td>
                     <td>Turns ${age} on ${YearMonth} ${date}<sup>${nth(date)}</sup></td>
-                    <td> ${countDay < 0 ? countDay * -1 + " " + "days ago" : "after" + " " + countDay + " " + "days"}</td>
+                    <td> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</td>
                     <td>
                         <button type="button" class="btn edit" value="${person.id}">
                         <img class="icon" src="./img/edit.svg" alt="edit">
