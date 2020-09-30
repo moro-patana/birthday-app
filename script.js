@@ -1,14 +1,18 @@
+import { tbody, addBtn, filterLastNameInput, filterMonthInput, filterForm, resetBtn } from './lib/element.js';
+import { wait, destroyPopup } from './lib/index.js';
+import { nth } from './lib/utils.js';
+
 const basepoint = './people.json';
-function wait(ms = 0) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
-// Grab elements
-const tbody = document.querySelector('tbody');
-const addBtn = document.querySelector(`.add`);
-const filterLastNameInput = document.querySelector('#filter-lastname');
-const filterMonthInput = document.querySelector('#filter-month');
-const filterForm = document.querySelector('.filter-person');
-const resetBtn = document.querySelector('.reset');
+// function wait(ms = 0) {
+// 	return new Promise(resolve => setTimeout(resolve, ms));
+// }
+// // Grab elements
+// const tbody = document.querySelector('tbody');
+// const addBtn = document.querySelector(`.add`);
+// const filterLastNameInput = document.querySelector('#filter-lastname');
+// const filterMonthInput = document.querySelector('#filter-month');
+// const filterForm = document.querySelector('.filter-person');
+// const resetBtn = document.querySelector('.reset');
 
 // Async function to destroy popup
 async function destroyPopup(popup) {
