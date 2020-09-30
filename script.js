@@ -3,25 +3,6 @@ import { wait, destroyPopup } from './lib/index.js';
 import { nth } from './lib/utils.js';
 
 const basepoint = './people.json';
-// function wait(ms = 0) {
-// 	return new Promise(resolve => setTimeout(resolve, ms));
-// }
-// // Grab elements
-// const tbody = document.querySelector('tbody');
-// const addBtn = document.querySelector(`.add`);
-// const filterLastNameInput = document.querySelector('#filter-lastname');
-// const filterMonthInput = document.querySelector('#filter-month');
-// const filterForm = document.querySelector('.filter-person');
-// const resetBtn = document.querySelector('.reset');
-
-// Async function to destroy popup
-async function destroyPopup(popup) {
-	popup.classList.remove('open');
-	await wait(200);
-	popup.remove();
-	popup = null;
-}
-
 // Fetch data from people.json
 async function fetchPerson() {
     const response = await fetch(basepoint);
@@ -38,17 +19,6 @@ async function fetchPerson() {
 // Map through the data
         return personList
         .map(person => {
-
-// Condition to check if the day should take th, st, nd, or rd
-                function nth(day) {
-                    if (day > 3 && day < 21) return 'th';
-                    switch (day % 10) {
-                      case 1:  return "st";
-                      case 2:  return "nd";
-                      case 3:  return "rd";
-                      default: return "th";
-                    }
-                  }
                 // Take the birthday date from the data
                   let current_datetime = new Date(person.birthday);
                   let date = current_datetime.getDate();
@@ -250,8 +220,12 @@ const deletePopup = (id) => {
                 modal.innerHTML = `
                 <p class="confirm">Do you want to delete?</p>
                 <div class="confirm-btn">
-                    <button class="yes">Yes</buton>
-                    <button class="no">No</buton>
+                    <button class="icon yes">
+                    <img src="./img/yes.svg" alt="yes">
+                    </buton>
+                    <button class="icon no">
+                    <img src="./img/no.svg" alt="no">
+                    </buton>
                 </div>
                 `;
                 document.body.appendChild(modal);
