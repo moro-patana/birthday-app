@@ -23,6 +23,13 @@ table {
 .icon {
     width: 40px;
 }
+.confirm-btn button {
+    width: 70px;
+    height: 60px;
+}
+.confirm-btn img {
+    width: 60px;
+}
 .birthday-list {
     padding: 2rem;
     color: #594a4e;
