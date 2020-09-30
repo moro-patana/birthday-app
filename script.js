@@ -190,8 +190,8 @@ async function fetchPerson() {
                     />
                     </fieldset>
                     <div class="button">
-                    <button type="submit" class="btn btn-danger save">Save</button>
-                    <button type="button" class="btn btn-danger cancel">Cancel</button>
+                    <button type="submit" class="save">Save</button>
+                    <button type="button" class="cancel">Cancel</button>
                     </div>
                 </div>
 `;
