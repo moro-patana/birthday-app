@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/moro-patana/birthday-app/issues"
   },
+  "browserslist": [
+    "last 1 chrome versions"
+  ],
   "homepage": "https://github.com/moro-patana/birthday-app#readme"
 }
