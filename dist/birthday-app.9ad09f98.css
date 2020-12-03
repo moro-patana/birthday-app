@@ -1,0 +1,136 @@
+body {
+    background-color: #faeee7;
+}
+.deco {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+h1 {
+    font-size: 70px;
+    text-align: center;
+    color: #202c2d;
+    text-shadow: 0 1px #808d93, -1px 0 #cdd2d5, -1px 2px #808d93, -2px 1px #cdd2d5, -2px 3px #808d93, -3px 2px #cdd2d5, -3px 4px #808d93, -4px 3px #cdd2d5, -4px 5px #808d93, -5px 4px #cdd2d5, -5px 6px #808d93, -6px 5px #cdd2d5, -6px 7px #808d93, -7px 6px #cdd2d5, -7px 8px #808d93, -8px 7px #cdd2d5;
+    color: #202c2d;
+}
+table {
+    background-color: #fffffe;
+}
+.btn {
+    border: none;
+    background: none;
+}
+.icon {
+    width: 40px;
+}
+.confirm-btn button {
+    width: 70px;
+    height: 60px;
+}
+.confirm-btn img {
+    width: 60px;
+}
+.birthday-list {
+    padding: 2rem;
+    color: #594a4e;
+}
+.add-newlist {
+    padding: 1rem;
+    margin-top: 1rem;
+}
+.filter {
+    padding: 2rem;
+}
+.popup.open {
+    opacity: 1;
+}
+.form-input {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    background-color: darkgrey;
+    width: 247px;
+    height: 460px;
+    padding: 1rem;
+    border-radius: 10px;
+}
+fieldset {
+    display: flex;
+    padding: 1rem;
+}
+input {
+    border: none;
+    width: 185px;
+    height: 32px;
+    border-radius: 5px;
+    padding-inline-start: 1rem;
+}
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+button {
+    width: 70px;
+}
+.confirm-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.modal {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    background-color: #ff8ba7;
+    display: block;
+    width: 230px;
+    height: 215px;
+    padding: 2rem;
+    border-radius: 20px;
+}
+.yes, 
+.no,
+.save,
+.cancel {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #fffffe;
+    border: none;
+}
+img {
+    border-radius: 50px;
+    width: 100px;
+}
+.filter-person {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.filter-person fieldset {
+    margin-right: 3rem;
+}
+header {
+    padding: 2rem;
+}
+.container-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #faeee7;
+    color: #33272a;
+}
+.reset,
+.add {
+    color: #33272a;
+    background-color: #ff8ba7;
+    width: 115px;
+    height: 50px;
+    margin-top: 2rem;
+    border: none;
+    border-radius: 10px;
+}
+
+/*# sourceMappingURL=/birthday-app.9ad09f98.css.map */
