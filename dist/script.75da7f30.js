@@ -117,81 +117,28 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"lib/element.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.resetBtn = exports.filterForm = exports.filterMonthInput = exports.filterLastNameInput = exports.addBtn = exports.tbody = void 0;
-// Grab elements
-const tbody = document.querySelector('tbody');
-exports.tbody = tbody;
-const addBtn = document.querySelector(`.add`);
-exports.addBtn = addBtn;
-const filterLastNameInput = document.querySelector('#filter-lastname');
-exports.filterLastNameInput = filterLastNameInput;
-const filterMonthInput = document.querySelector('#filter-month');
-exports.filterMonthInput = filterMonthInput;
-const filterForm = document.querySelector('.filter-person');
-exports.filterForm = filterForm;
-const resetBtn = document.querySelector('.reset');
-exports.resetBtn = resetBtn;
-},{}],"lib/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.wait = wait;
-exports.destroyPopup = destroyPopup;
+})({"script.js":[function(require,module,exports) {
+const basepoint = "https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/93debb7463fbaaec29622221b8f9e719bd5b119f/birthdayPeople.json";
 
 function wait(ms = 0) {
   return new Promise(resolve => setTimeout(resolve, ms));
-} // Async function to destroy popup
+} // Grab elements
 
+
+const birthdayList = document.querySelector('.birthday-list');
+const addBtn = document.querySelector(`.add`);
+const filterLastNameInput = document.querySelector('#filter-lastname');
+const filterMonthInput = document.querySelector('#filter-month');
+const filterForm = document.querySelector('.filter-person');
+const resetBtn = document.querySelector('.reset'); // Async function to destroy popup
 
 async function destroyPopup(popup) {
   popup.classList.remove('open');
   await wait(200);
   popup.remove();
   popup = null;
-}
-},{}],"lib/utils.js":[function(require,module,exports) {
-"use strict";
+} // Fetch data from people.json
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.nth = nth;
-
-function nth(day) {
-  if (day > 3 && day < 21) return 'th';
-
-  switch (day % 10) {
-    case 1:
-      return "st";
-
-    case 2:
-      return "nd";
-
-    case 3:
-      return "rd";
-
-    default:
-      return "th";
-  }
-}
-},{}],"script.js":[function(require,module,exports) {
-"use strict";
-
-var _element = require("./lib/element.js");
-
-var _index = require("./lib/index.js");
-
-var _utils = require("./lib/utils.js");
-
-const basepoint = './people.json'; // Fetch data from people.json
 
 async function fetchPerson() {
   const response = await fetch(basepoint);
@@ -208,7 +155,26 @@ async function fetchPerson() {
     data; // Map through the data
 
     return personList.map(person => {
-      // Take the birthday date from the data
+      // Condition to check if the day should take th, st, nd, or rd
+      function nth(day) {
+        if (day > 3 && day < 21) return 'th';
+
+        switch (day % 10) {
+          case 1:
+            return "st";
+
+          case 2:
+            return "nd";
+
+          case 3:
+            return "rd";
+
+          default:
+            return "th";
+        }
+      } // Take the birthday date from the data
+
+
       let current_datetime = new Date(person.birthday);
       let date = current_datetime.getDate();
       let year = current_datetime.getFullYear();
@@ -227,52 +193,52 @@ async function fetchPerson() {
       let aDay = 1000 * 60 * 60 * 24;
       let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay); // Create table row
 
-      return `<tr data-id="${person.id}">
-                    <th scope="row"><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></th>
-                    <td>${person.lastName}</td>
-                    <td>${person.firstName}</td>
-                    <td>${fullDate}</td>
-                    <td>Turns ${age} on ${YearMonth} ${date}<sup>${(0, _utils.nth)(date)}</sup></td>
-                    <td> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</td>
-                    <td>
+      return `<article data-id="${person.id}">
+                    <img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+                    <div>
+                        <p class="name">${person.lastName} ${person.firstName}</td>
+                        <p>Turns <b>${age}</b> on ${YearMonth} ${date}<sup>${nth(date)}</sup></p>
+                    </div>
+                    <span>${fullDate}</span>
+                    <span> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</span>
+                    <div>
                         <button type="button" class="btn edit" value="${person.id}">
                         <img class="icon" src="./img/edit.svg" alt="edit">
                         </button>
-                    </td>
-                    <td class="text-white">
+                    </div>
+                    <div class="text-white">
                         <button type="button" class="btn delete" data-id="${person.id}">
                         <img class="icon" src="./img/delete.svg" alt="delete">
                         </button>
-                    </td>
-                </tr>`;
+                    </div>
+                </article>`;
     }).join('');
   };
 
   function displayList() {
     const html = storedHTML(data);
-    _element.tbody.innerHTML = html;
+    birthdayList.innerHTML = html;
   }
 
   ;
   displayList();
 
   const resetFilters = e => {
-    _element.filterForm.reset();
-
+    filterForm.reset();
     displayList();
   };
 
   const searchPerson = e => {
-    const searchInput = _element.filterLastNameInput.value;
+    const searchInput = filterLastNameInput.value;
     const lowerCaseFilter = searchInput.toLowerCase(); // Filter the data to get the lastname and turn them into lowercase
 
     const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
     const filterHTML = storedHTML(filterLastName);
-    _element.tbody.innerHTML = filterHTML;
+    birthdayList.innerHTML = filterHTML;
   };
 
   const searchByBirthMonth = e => {
-    const searchMonth = _element.filterMonthInput.value;
+    const searchMonth = filterMonthInput.value;
     const lowerCaseMonth = searchMonth.toLowerCase(); // Filter the data to get the birthday and turn them into lowercase
 
     const filterBirthMonth = data.filter(person => {
@@ -284,7 +250,7 @@ async function fetchPerson() {
       return stringDate.toLowerCase().includes(lowerCaseMonth);
     });
     const filterMonthHTML = storedHTML(filterBirthMonth);
-    _element.tbody.innerHTML = filterMonthHTML;
+    birthdayList.innerHTML = filterMonthHTML;
   }; // Grab the edit button
 
 
@@ -294,7 +260,7 @@ async function fetchPerson() {
     if (editBtn) {
       e.preventDefault();
       const findTr = e.target.closest('tr');
-      const btn = findTr.querySelector('.edit');
+      const btn = document.querySelector('.edit');
       const id = btn.value;
       editPopup(id); // tbody.dispatchEvent(new CustomEvent('listUpdated'));
     }
@@ -359,7 +325,7 @@ async function fetchPerson() {
 
       window.addEventListener('click', e => {
         if (e.target.closest('button.cancel')) {
-          (0, _index.destroyPopup)(popup);
+          destroyPopup(popup);
         }
       }); // Listen to the submit button to save the changes
 
@@ -367,15 +333,14 @@ async function fetchPerson() {
         e.preventDefault();
         person.picture = popup.picture.value;
         person.lastName = popup.lastName.value;
-        person.firstName = popup.firstName.value, person.birthday = popup.birthday.value, person.id = popup.id.value, (0, _index.destroyPopup)(popup);
+        person.firstName = popup.firstName.value, person.birthday = popup.birthday.value, person.id = popup.id.value, destroyPopup(popup);
         displayList(person);
-
-        _element.tbody.dispatchEvent(new CustomEvent('listUpdated'));
+        birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
       }, {
         once: true
       });
       document.body.appendChild(popup);
-      await (0, _index.wait)(50);
+      await wait(50);
       popup.classList.add('open');
     });
   }; // Find the delete button and the table row
@@ -383,11 +348,10 @@ async function fetchPerson() {
 
   const deletePerson = e => {
     if (e.target.closest('button.delete')) {
-      const tableRow = e.target.closest('tr');
-      const id = tableRow.dataset.id;
+      const article = e.target.closest('article');
+      const id = article.dataset.id;
       deletePopup(id);
-
-      _element.tbody.dispatchEvent(new CustomEvent('listUpdated'));
+      birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
     }
   };
 
@@ -397,14 +361,12 @@ async function fetchPerson() {
       const modal = document.createElement('div');
       modal.classList.add('modal');
       modal.innerHTML = `
-                <p class="confirm">Do you want to delete?</p>
-                <div class="confirm-btn">
-                    <button class="icon yes">
-                    <img src="./img/yes.svg" alt="yes">
-                    </buton>
-                    <button class="icon no">
-                    <img src="./img/no.svg" alt="no">
-                    </buton>
+                <div class="delete-popup">
+                    <p class="confirm">Do you want to delete?</p>
+                    <div class="confirm-btn">
+                        <button class="yes">Yes</buton>
+                        <button class="no">No</buton>
+                    </div>
                 </div>
                 `;
       document.body.appendChild(modal);
@@ -415,12 +377,12 @@ async function fetchPerson() {
           const personToDelete = data.filter(person => person.id != id);
           data = personToDelete;
           displayList(personToDelete);
-          (0, _index.destroyPopup)(modal);
+          destroyPopup(modal);
         }
       });
       window.addEventListener('click', e => {
         if (e.target.closest('button.no')) {
-          (0, _index.destroyPopup)(modal);
+          destroyPopup(modal);
         }
       });
     });
@@ -433,7 +395,7 @@ async function fetchPerson() {
 
     window.addEventListener('click', e => {
       if (e.target.closest('button.cancel')) {
-        (0, _index.destroyPopup)(newPopupList);
+        destroyPopup(newPopupList);
       }
     });
   };
@@ -498,9 +460,8 @@ async function fetchPerson() {
       };
       data.push(newList);
       displayList(data);
-      (0, _index.destroyPopup)(newPopupList);
-
-      _element.tbody.dispatchEvent(new CustomEvent('listUpdated'));
+      destroyPopup(newPopupList);
+      birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
     });
   };
 
@@ -512,7 +473,7 @@ async function fetchPerson() {
       displayList();
     }
 
-    _element.tbody.dispatchEvent(new CustomEvent('listUpdated'));
+    birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
   }; // set the data in the local storage and stringify it
 
 
@@ -521,25 +482,18 @@ async function fetchPerson() {
   }; // Envent listners
 
 
-  _element.tbody.addEventListener('click', editPerson);
-
-  _element.tbody.addEventListener('click', deletePerson);
-
-  _element.addBtn.addEventListener('click', addList);
-
-  _element.tbody.addEventListener('listUpdated', updateLocalStorage);
-
-  _element.filterLastNameInput.addEventListener('input', searchPerson);
-
-  _element.filterMonthInput.addEventListener('input', searchByBirthMonth);
-
-  _element.resetBtn.addEventListener('click', resetFilters);
-
+  birthdayList.addEventListener('click', editPerson);
+  birthdayList.addEventListener('click', deletePerson);
+  addBtn.addEventListener('click', addList);
+  birthdayList.addEventListener('listUpdated', updateLocalStorage);
+  filterLastNameInput.addEventListener('input', searchPerson);
+  filterMonthInput.addEventListener('input', searchByBirthMonth);
+  resetBtn.addEventListener('click', resetFilters);
   initLocalStorage();
 }
 
 fetchPerson();
-},{"./lib/element.js":"lib/element.js","./lib/index.js":"lib/index.js","./lib/utils.js":"lib/utils.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -567,7 +521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58836" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55441" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

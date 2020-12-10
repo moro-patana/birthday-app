@@ -1,8 +1,23 @@
-import { tbody, addBtn, filterLastNameInput, filterMonthInput, filterForm, resetBtn } from './lib/element.js';
-import { wait, destroyPopup } from './lib/index.js';
-import { nth } from './lib/utils.js';
+const basepoint = "https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/93debb7463fbaaec29622221b8f9e719bd5b119f/birthdayPeople.json";
+function wait(ms = 0) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+// Grab elements
+const birthdayList = document.querySelector('.birthday-list');
+const addBtn = document.querySelector(`.add`);
+const filterLastNameInput = document.querySelector('#filter-lastname');
+const filterMonthInput = document.querySelector('#filter-month');
+const filterForm = document.querySelector('.filter-person');
+const resetBtn = document.querySelector('.reset');
 
-const basepoint = './people.json';
+// Async function to destroy popup
+async function destroyPopup(popup) {
+	popup.classList.remove('open');
+	await wait(200);
+	popup.remove();
+	popup = null;
+}
+
 // Fetch data from people.json
 async function fetchPerson() {
     const response = await fetch(basepoint);
@@ -19,6 +34,17 @@ async function fetchPerson() {
 // Map through the data
         return personList
         .map(person => {
+
+// Condition to check if the day should take th, st, nd, or rd
+                function nth(day) {
+                    if (day > 3 && day < 21) return 'th';
+                    switch (day % 10) {
+                      case 1:  return "st";
+                      case 2:  return "nd";
+                      case 3:  return "rd";
+                      default: return "th";
+                    }
+                  }
                 // Take the birthday date from the data
                   let current_datetime = new Date(person.birthday);
                   let date = current_datetime.getDate();
@@ -41,30 +67,32 @@ async function fetchPerson() {
                   let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay);
                 
                 // Create table row
-                return `<tr data-id="${person.id}">
-                    <th scope="row"><img src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></th>
-                    <td>${person.lastName}</td>
-                    <td>${person.firstName}</td>
-                    <td>${fullDate}</td>
-                    <td>Turns ${age} on ${YearMonth} ${date}<sup>${nth(date)}</sup></td>
-                    <td> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</td>
-                    <td>
+                return `<article data-id="${person.id}">
+                    <img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+                    <div>
+                        <p class="name">${person.lastName} ${person.firstName}</td>
+                        <p>Turns <b>${age}</b> on ${YearMonth} ${date}<sup>${nth(date)}</sup></p>
+                    </div>
+                    <span>${fullDate}</span>
+                    <span> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</span>
+                    <div>
                         <button type="button" class="btn edit" value="${person.id}">
                         <img class="icon" src="./img/edit.svg" alt="edit">
                         </button>
-                    </td>
-                    <td class="text-white">
+                    </div>
+                    <div class="text-white">
                         <button type="button" class="btn delete" data-id="${person.id}">
                         <img class="icon" src="./img/delete.svg" alt="delete">
                         </button>
-                    </td>
-                </tr>`
+                    </div>
+                </article>`
+                
         })
         .join('');
     }
      function displayList(){
          const html = storedHTML(data);
-        tbody.innerHTML = html;
+        birthdayList.innerHTML = html;
     };
     displayList();
     const resetFilters = e => {
@@ -78,7 +106,7 @@ async function fetchPerson() {
     // Filter the data to get the lastname and turn them into lowercase
         const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
         const filterHTML = storedHTML(filterLastName);
-        tbody.innerHTML = filterHTML;
+        birthdayList.innerHTML = filterHTML;
     }
     const searchByBirthMonth = (e) => {
         const searchMonth = filterMonthInput.value;
@@ -95,7 +123,7 @@ async function fetchPerson() {
         })
         
         const filterMonthHTML = storedHTML(filterBirthMonth)
-        tbody.innerHTML = filterMonthHTML;
+        birthdayList.innerHTML = filterMonthHTML;
 
     }
 
@@ -106,7 +134,7 @@ async function fetchPerson() {
         if (editBtn) {
             e.preventDefault();
             const findTr = e.target.closest('tr');
-            const btn = findTr.querySelector('.edit')
+            const btn = document.querySelector('.edit')
             const id = btn.value;
             editPopup(id);
             // tbody.dispatchEvent(new CustomEvent('listUpdated'));
@@ -189,7 +217,7 @@ async function fetchPerson() {
 
                 destroyPopup(popup);
                 displayList(person);
-                tbody.dispatchEvent(new CustomEvent('listUpdated'));
+                birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
 
             },
                 { once: true }
@@ -202,10 +230,10 @@ async function fetchPerson() {
 // Find the delete button and the table row
     const deletePerson = (e) => {
         if (e.target.closest('button.delete')) {
-          const tableRow = e.target.closest('tr');
-          const id = tableRow.dataset.id;
+          const article = e.target.closest('article');
+          const id = article.dataset.id;
           deletePopup(id);
-          tbody.dispatchEvent(new CustomEvent('listUpdated'));
+          birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
           
         }
 
@@ -218,14 +246,12 @@ const deletePopup = (id) => {
                 const modal = document.createElement('div');
                 modal.classList.add('modal');
                 modal.innerHTML = `
-                <p class="confirm">Do you want to delete?</p>
-                <div class="confirm-btn">
-                    <button class="icon yes">
-                    <img src="./img/yes.svg" alt="yes">
-                    </buton>
-                    <button class="icon no">
-                    <img src="./img/no.svg" alt="no">
-                    </buton>
+                <div class="delete-popup">
+                    <p class="confirm">Do you want to delete?</p>
+                    <div class="confirm-btn">
+                        <button class="yes">Yes</buton>
+                        <button class="no">No</buton>
+                    </div>
                 </div>
                 `;
                 document.body.appendChild(modal);
@@ -321,7 +347,7 @@ newPopupList.addEventListener('submit', e => {
     data.push(newList);
     displayList(data);
     destroyPopup(newPopupList);
-    tbody.dispatchEvent(new CustomEvent('listUpdated'));
+    birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
 })
     }
 
@@ -331,7 +357,7 @@ const initLocalStorage = () => {
         data = dataList;
         displayList();
     }
-    tbody.dispatchEvent(new CustomEvent('listUpdated'));
+    birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
 }
 // set the data in the local storage and stringify it
 const updateLocalStorage = () => {
@@ -340,10 +366,10 @@ const updateLocalStorage = () => {
 
 
 // Envent listners
- tbody.addEventListener('click', editPerson);
- tbody.addEventListener('click', deletePerson);
+ birthdayList.addEventListener('click', editPerson);
+ birthdayList.addEventListener('click', deletePerson);
  addBtn.addEventListener('click', addList);
- tbody.addEventListener('listUpdated', updateLocalStorage);
+ birthdayList.addEventListener('listUpdated', updateLocalStorage);
  filterLastNameInput.addEventListener('input', searchPerson);
  filterMonthInput.addEventListener('input', searchByBirthMonth)
  resetBtn.addEventListener('click', resetFilters);

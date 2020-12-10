@@ -10,14 +10,15 @@
 	</head>
 	<body>
 		<div class="deco">
-			<img src="./img/images.jpg" alt="balloon">
-			<img src="./img/images.jpg" alt="balloon">
+			<img class="icon" src="./img/images.jpg" alt="balloon">
+			<img class="icon" src="./img/images.jpg" alt="balloon">
 		</div>
 		<header>
-		   <h1><img src="./img/cake.svg" alt="birthday"> Happy Birthday<img src="./img/cake.svg" alt="birthday"></h1>
+		   <h1><img class="icon" src="./img/cake.svg" alt="birthday"> Happy Birthday<img class="icon" src="./img/cake.svg" alt="birthday"></h1>
 		</header>
 		<div class="container-form">
 		<div class="add-newlist">
+			<label>Add new list</label>
 			<button class="add">Add</button>
 		</div>
 		<div class="filter">
@@ -44,27 +45,12 @@
 					</select>
 				</fieldset>
 	
-					<button type="button" class="reset">Reset filters</button>
+				<button type="button" class="reset">Reset filters</button>
 			</form>
 		</div>
 	</div>
 		<div class="birthday-list">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Picture</th>
-						<th scope="col">Lastname</th>
-						<th scope="col">Firstname</th>
-						<th scope="col">Birthday</th>
-						<th scope="col">Ages</th>
-						<th scope="col">Date Computation</th>
-						<th scope="col">Edit</th>
-						<th scope="col">Delete</th>
-					</tr>
-				</thead>
-			<tbody></tbody>
-			</table>
 		</div>
-		<script type="module" src="script.js"></script>
+		<script src="script.js"></script>
 	</body>
 </html>
