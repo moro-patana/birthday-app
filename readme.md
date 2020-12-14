@@ -38,10 +38,8 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 $ git clone https://github.com/your-user-name/your-project-name
 
 # Install dependencies
-$ npm install react react-dom react-router-dom
+$ npm init
 
-# Run the app
-$ npm start or parcel index.html
 ```
 ## Structure:
  1. Declare the path where I fetch the data.
