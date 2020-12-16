@@ -165,6 +165,9 @@ article {
     background-color: blue;
     color: white;
 }
+.no {
+    margin-left: 10px;
+}
 @media (min-width: 1114px) {
     body {
         max-width: 1114px;
