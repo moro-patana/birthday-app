@@ -392,12 +392,6 @@ async function fetchPerson() {
     if (e.target.closest('button.add')) {
       addListPopup();
     }
-
-    window.addEventListener('click', e => {
-      if (e.target.closest('button.cancel')) {
-        destroyPopup(newPopupList);
-      }
-    });
   };
 
   const addListPopup = e => {
@@ -446,6 +440,11 @@ async function fetchPerson() {
                 </div>
             </div>
 `;
+    window.addEventListener('click', e => {
+      if (e.target.closest('button.cancel')) {
+        destroyPopup(newPopupList);
+      }
+    });
     document.body.appendChild(newPopupList);
     newPopupList.classList.add('open');
     newPopupList.addEventListener('submit', e => {
@@ -521,7 +520,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63544" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49345" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
