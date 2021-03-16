@@ -73,17 +73,20 @@ async function fetchPerson() {
                         <p class="name">${person.lastName} ${person.firstName}</td>
                         <p>Turns <b>${age}</b> on ${YearMonth} ${date}<sup>${nth(date)}</sup></p>
                     </div>
-                    <span>${fullDate}</span>
-                    <span> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</span>
                     <div>
-                        <button type="button" class="btn edit" value="${person.id}">
-                        <img class="icon" src="./img/edit.svg" alt="edit">
-                        </button>
-                    </div>
-                    <div class="text-white">
-                        <button type="button" class="btn delete" data-id="${person.id}">
-                        <img class="icon" src="./img/delete.svg" alt="delete">
-                        </button>
+                        <span> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</span>
+                        <div class="btn-container">
+                            <div>
+                                <button type="button" class="btn edit" value="${person.id}">
+                                <img class="icon" src="./img/edit.svg" alt="edit">
+                                </button>
+                            </div>
+                            <div class="text-white">
+                                <button type="button" class="btn delete" data-id="${person.id}">
+                                <img class="icon" src="./img/delete.svg" alt="delete">
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </article>`
 
@@ -151,6 +154,7 @@ async function fetchPerson() {
             popup.classList.add('popup');
             popup.innerHTML = `
                 <div class="form-input">
+                <h2>Edit ${person.firstName} ${person.lastName}</h2>
                 <fieldset>
                 <label for="picture">Picture</label>
                 <input

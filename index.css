@@ -154,6 +154,11 @@ article {
     display: flex;
     flex-direction: row;
 }
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .save,
 .cancel,
 .yes,
