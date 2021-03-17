@@ -13,18 +13,14 @@
 		   <h1><img class="icon" src="./img/cake.svg" alt="birthday"> Happy Birthday<img class="icon" src="./img/cake.svg" alt="birthday"></h1>
 		</header>
 		<div class="container-form">
-		<div class="add-newlist">
-			<label>Add new list</label>
-			<button class="add">Add</button>
-		</div>
 		<div class="filter">
 			<form class="filter-person">
 				<fieldset>
-					<label for="filter-lastname">Lastname:</label>
+					<label for="filter-lastname">Filter by name</label>
 					<input type="text" id="filter-lastname" placeholder="Filter by Lastname">
 				</fieldset>
 				<fieldset>
-					<label for="filter-month">Birth month:</label>
+					<label for="filter-month">Filter by month:</label>
 					<select id="filter-month">
 						<option value="January">January</option>
 						<option value="February">February</option>
@@ -40,8 +36,9 @@
 						<option value="December">December</option>
 					</select>
 				</fieldset>
-	
-				<button type="button" class="reset">Reset filters</button>
+				<div class="add-newlist">
+					<button class="add">Add somebody</button>
+				</div>
 			</form>
 		</div>
 	</div>

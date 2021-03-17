@@ -52,9 +52,9 @@ async function fetchPerson() {
                 let month = current_datetime.getMonth();
                 // Add 1 to the month so that the array will not start at 0
                 let birthMonth = month + 1;
-                let day = current_datetime.getDay();
-                let fullDate = year + "/" + birthMonth + "/" + date;
-                let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
+                // let day = current_datetime.getDay();
+                // let fullDate = year + "/" + birthMonth + "/" + date;
+                // let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
 
                 // Calculate ages based on the birthday year
                 let today = new Date();
@@ -65,16 +65,20 @@ async function fetchPerson() {
                 let birthdayYear = new Date(yearNow, month, date);
                 let aDay = 1000 * 60 * 60 * 24;
                 let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay);
+                let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
+                let upComingBirthdayMessage = birthdayInDays > 1 ? "days" : "day"
 
                 // Create table row
                 return `<article data-id="${person.id}">
-                    <img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
-                    <div>
-                        <p class="name">${person.lastName} ${person.firstName}</td>
-                        <p>Turns <b>${age}</b> on ${YearMonth} ${date}<sup>${nth(date)}</sup></p>
+                    <div class="profile-container">
+                        <img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+                        <div>
+                            <p class="name">${person.lastName} ${person.firstName}</td>
+                            <p>Turns <b>${age}</b> on <sup>${nth(date)}</sup></p>
+                        </div>
                     </div>
                     <div>
-                        <span> ${countDay < 0 ? countDay * -1 + " " + "day(s) ago" : "after" + " " + countDay + " " + "day(s)"}</span>
+                        <span>In ${birthdayInDays} ${upComingBirthdayMessage}</span>
                         <div class="btn-container">
                             <div>
                                 <button type="button" class="btn edit" value="${person.id}">
@@ -376,7 +380,7 @@ async function fetchPerson() {
     birthdayList.addEventListener('listUpdated', updateLocalStorage);
     filterLastNameInput.addEventListener('input', searchPerson);
     filterMonthInput.addEventListener('input', searchByBirthMonth)
-    resetBtn.addEventListener('click', resetFilters);
+    // resetBtn.addEventListener('click', resetFilters);
 
 
     initLocalStorage();
