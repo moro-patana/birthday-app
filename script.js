@@ -50,11 +50,11 @@ async function fetchPerson() {
                 let date = current_datetime.getDate();
                 let year = current_datetime.getFullYear();
                 let month = current_datetime.getMonth();
-                // Add 1 to the month so that the array will not start at 0
-                let birthMonth = month + 1;
-                // let day = current_datetime.getDay();
-                // let fullDate = year + "/" + birthMonth + "/" + date;
-                // let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
+                // // Add 1 to the month so that the array will not start at 0
+                // let birthMonth = month + 1;
+                // // let day = current_datetime.getDay();
+                // // let fullDate = year + "/" + birthMonth + "/" + date;
+                // // let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
 
                 // Calculate ages based on the birthday year
                 let today = new Date();
@@ -140,10 +140,11 @@ async function fetchPerson() {
         const editBtn = e.target.closest('button.edit');
         if (editBtn) {
             e.preventDefault();
-            const findTr = e.target.closest('tr');
-            const btn = document.querySelector('.edit')
-            const id = btn.value;
-            editPopup(id);
+            const findArticle = e.target.closest('article');
+            // const btn = document.querySelector('.edit')
+            const btn = findArticle.dataset.id
+            // const id = btn.value;
+            editPopup(btn);
             // tbody.dispatchEvent(new CustomEvent('listUpdated'));
 
         }
