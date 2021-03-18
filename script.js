@@ -154,6 +154,8 @@ async function fetchPerson() {
         return new Promise(async function (resolve, reject) {
             const person = data.find(person => person.id == id);
             // Create form element to edit the list
+            const maxDate = new Date().toISOString().slice(0, 10)
+            const formatDateBirthday = new Date(person.birthday).toISOString().slice(0, 10)
             const popup = document.createElement(`form`);
             popup.classList.add('popup');
             popup.innerHTML = `
@@ -195,8 +197,8 @@ async function fetchPerson() {
                         type="date"
                         name="birthday"
                         id="birthday"
-                        value
-                        ="${person.birthday}"
+                        value="${formatDateBirthday}"
+                        max="${maxDate}"
                     />
                     </fieldset>
                     <div class="button">
@@ -205,7 +207,6 @@ async function fetchPerson() {
                     </div>
                 </div>
 `;
-
             // listen to the window and the cancel button
             window.addEventListener('click', e => {
                 if (e.target.closest('button.cancel')) {
