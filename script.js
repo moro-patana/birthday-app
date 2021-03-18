@@ -17,22 +17,31 @@ async function destroyPopup(popup) {
     popup.remove();
     popup = null;
 }
+function calcutateDateToBirthday(personToCalculateBirthdate) {
+    let birthdayDateTime = new Date(personToCalculateBirthdate.birthday);
+    let birthDate = birthdayDateTime.getDate();
+    // let birthdateYear = birthdayDateTime.getFullYear();
+    let birthMonth = birthdayDateTime.getMonth();
+    let today = new Date();
+    let yearNow = today.getFullYear();
+    let birthdayYear = new Date(yearNow, birthMonth, birthDate);
+    let aDay = 1000 * 60 * 60 * 24;
+    let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay);
+    let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
+    return birthdayInDays;
+}
 
 // Fetch data from people.json
 async function fetchPerson() {
     const response = await fetch(basepoint);
     let data = await response.json();
     const storedHTML = (personList) => {
-        data.sort((a, b) => {
-            if (a === b) {
-                return 0;
-            }
-            return a.lastName < b.lastName ? -1 : 1;
-        });
-        data;
+        const sortedPersonList = personList.sort((personA, personB) => {
+            return calcutateDateToBirthday(personA) - calcutateDateToBirthday(personB)
+        }) 
 
         // Map through the data
-        return personList
+        return sortedPersonList
             .map(person => {
 
                 // Condition to check if the day should take th, st, nd, or rd
@@ -46,26 +55,28 @@ async function fetchPerson() {
                     }
                 }
                 // Take the birthday date from the data
-                let current_datetime = new Date(person.birthday);
-                let date = current_datetime.getDate();
-                let year = current_datetime.getFullYear();
-                let month = current_datetime.getMonth();
-                // // Add 1 to the month so that the array will not start at 0
-                // let birthMonth = month + 1;
-                // // let day = current_datetime.getDay();
-                // // let fullDate = year + "/" + birthMonth + "/" + date;
-                // // let YearMonth = ["January", "February", "March", "April", "May", "June", "Jolay", "August", "September", "October", "November", "December"][current_datetime.getMonth()];
-
+                let birthdayDateTime = new Date(person.birthday);
+                let birthDate = birthdayDateTime.getDate();
+                let birthdateYear = birthdayDateTime.getFullYear();
+                let birthMonth = birthdayDateTime.getMonth();
+                const monthTable = {
+                    0: "January",
+                    1: "February",
+                    2: "March",
+                    3: "April",
+                    4: "May",
+                    5: "June",
+                    6: "July",
+                    7: "August",
+                    8: "September",
+                    9: "October",
+                    10: "November",
+                    11: "December"
+                }
                 // Calculate ages based on the birthday year
                 let today = new Date();
-                let age = today.getFullYear() - year;
-
-                // Calculate days number between Date.now() and the birthday months and day
-                let yearNow = today.getFullYear();
-                let birthdayYear = new Date(yearNow, month, date);
-                let aDay = 1000 * 60 * 60 * 24;
-                let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay);
-                let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
+                let age = (today.getFullYear() - birthdateYear) + 1;
+                let birthdayInDays = calcutateDateToBirthday(person)
                 let upComingBirthdayMessage = birthdayInDays > 1 ? "days" : "day"
 
                 // Create table row
@@ -74,7 +85,7 @@ async function fetchPerson() {
                         <img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
                         <div>
                             <p class="name">${person.lastName} ${person.firstName}</td>
-                            <p>Turns <b>${age}</b> on <sup>${nth(date)}</sup></p>
+                            <p>Turns <b>${age}</b> on ${monthTable[birthMonth]} ${birthDate}<sup>${nth(birthDate)}</sup></p>
                         </div>
                     </div>
                     <div>
@@ -102,44 +113,20 @@ async function fetchPerson() {
         birthdayList.innerHTML = html;
     };
     displayList();
-    const resetFilters = e => {
-        filterForm.reset();
-        displayList();
-    };
 
-    // const searchPerson = (e) => {
-    //     const searchInput = filterLastNameInput.value;
-    //     const lowerCaseFilter = searchInput.toLowerCase();
-    //     // Filter the data to get the lastname and turn them into lowercase
-    //     const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
-    //     const filterHTML = storedHTML(filterLastName);
-    //     birthdayList.innerHTML = filterHTML;
-    // }
-    // const searchByBirthMonth = (e) => {
-    //     const searchMonth = filterMonthInput.value;
-    //     const lowerCaseMonth = searchMonth.toLowerCase();
-    //     // Filter the data to get the birthday and turn them into lowercase
-    //     const filterBirthMonth = data.filter(person => {
-    //         const birthdayMonth = new Date(person.birthday);
-    //         // stringify the birthdate
-    //         const stringDate = birthdayMonth
-    //             .toLocaleString('USA', { month: 'long' })
-
-    //         return stringDate.toLowerCase().includes(lowerCaseMonth);
-
-    //     })
         const filterPeople = () => {
             const nameFilter = filterLastNameInput.value.toLowerCase()
             const monthFilter = Number(filterMonthInput.value)
             console.log(monthFilter);
-            const filteredPeople = data.filter(person => (nameFilter ? person.lastName.toLowerCase().includes(nameFilter) : true) && (monthFilter ? new Date(person.birthday).getMonth() + 1 === monthFilter : true))
+            const filteredPeople = data.filter(person => (nameFilter
+                 ? person.lastName.toLowerCase().includes(nameFilter) 
+                 : true)
+                  && (monthFilter
+                     ? new Date(person.birthday).getMonth() + 1 === monthFilter 
+                     : true))
             console.log(filteredPeople);
             birthdayList.innerHTML = storedHTML(filteredPeople)
         }
-
-        
-
-
 
     // Grab the edit button
     const editPerson = (e) => {
@@ -165,7 +152,7 @@ async function fetchPerson() {
             popup.classList.add('popup');
             popup.innerHTML = `
                 <div class="form-input">
-                <h2>Edit ${person.firstName} ${person.lastName}</h2>
+                <h2 class="person-name">Edit ${person.firstName} ${person.lastName}</h2>
                 <fieldset>
                 <label for="picture">Picture</label>
                 <input
@@ -296,6 +283,8 @@ async function fetchPerson() {
 
     }
     const addListPopup = (e) => {
+        const maxDate = new Date().toISOString().slice(0, 10)
+        // const formatDateBirthday = new Date(person.birthday).toISOString().slice(0, 10)
         const newPopupList = document.createElement(`form`);
         newPopupList.classList.add('AddListPopup');
         newPopupList.innerHTML = `
@@ -333,6 +322,7 @@ async function fetchPerson() {
                     type="date"
                     name="birthdate"
                     id="birthdate"
+                    max="${maxDate}"
                 />
                 </fieldset>
                 <div class="button">
@@ -387,8 +377,6 @@ async function fetchPerson() {
     birthdayList.addEventListener('listUpdated', updateLocalStorage);
     filterLastNameInput.addEventListener('input', filterPeople);
     filterMonthInput.addEventListener('input', filterPeople)
-    // resetBtn.addEventListener('click', resetFilters);
-
 
     initLocalStorage();
 

@@ -1,0 +1,229 @@
+html {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 500;
+}
+body {
+    margin: 0;
+    padding: 1rem;
+    background: #D8EEFE;
+}
+h1 {
+    font-size: 70px;
+    text-align: center;
+    color: #202c2d;
+    text-shadow: 0 1px #808d93, -1px 0 #cdd2d5, -1px 2px #808d93, -2px 1px #cdd2d5, -2px 3px #808d93, -3px 2px #cdd2d5, -3px 4px #808d93, -4px 3px #cdd2d5, -4px 5px #808d93, -5px 4px #cdd2d5, -5px 6px #808d93, -6px 5px #cdd2d5, -6px 7px #808d93, -7px 6px #cdd2d5, -7px 8px #808d93, -8px 7px #cdd2d5;
+    color: #202c2d;
+}
+label {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #094067;
+}
+b {
+    color: hotpink;
+    font-size: 18px;
+}
+p,
+span {
+    font-size: 24px;
+    line-height: 28px;
+    color: #5F6C7B;
+}
+.deco {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.icon {
+    width: 40px;
+}
+.profile {
+    width: 100px;
+    border-radius: 5px;
+}
+.container-form {
+    padding-top: 3rem;
+}
+.filter-person {
+    display: flex;
+    flex-direction: column;
+}
+fieldset,
+.add-newlist {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+.add-newlist {
+    padding-top: 30px;
+}
+
+.add {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    background: #EF4565;
+    border-radius: 5px;
+    padding: 15px;
+    border: none;
+    color: white;
+    width: 158px;
+    height: 50px;
+}
+.add {
+    margin: 0;
+}
+input,
+select {
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 18px;
+    line-height: 21px;
+    color: #5F6C7B;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+input:focus,
+select:focus,
+.add:focus {
+    border: none;
+    outline: none;
+}
+#filter-lastname {
+    width: 264px;
+    height: 50px;
+}
+select {
+    width: 282px;
+}
+.birthday-list {
+    padding-top: 3rem;
+}
+article {
+    background: #FFFFFE;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    gap: 39px;
+}
+.name {
+    font-size: 36px;
+    line-height: 43px;
+    color: #000000;
+    margin: 0;
+}
+.person-name {
+    font-size: 48px;
+    line-height: 57px;
+    color: #094067;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: hsla(0, 100%, 3%, 0.5);
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+    border-radius: 10px;
+
+}
+
+.delete-popup {
+    background-color: #ff8ba7;
+    display: block;
+    width: 230px;
+    height: 215px;
+    padding: 2rem;
+    border-radius: 20px;
+}
+.popup,
+.AddListPopup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        background-color: hsla(0, 100%, 3%, 0.5);
+        width: 100vw;
+        height: 100vh;
+        border-radius: 10px;
+    
+}
+.popup.open {
+    opacity: 1;
+}
+.form-input {
+    background-color: darkgrey;
+    width: 400px;
+    height: 460px;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.button {
+    padding-top: 20px;
+    text-align: center;
+}
+.confirm-btn {
+    display: flex;
+    flex-direction: row;
+}
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.save,
+.cancel,
+.yes,
+.no {
+    border: none;
+    width: 85px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: blue;
+    color: white;
+}
+.no {
+    margin-left: 10px;
+}
+@media (min-width: 1114px) {
+    body {
+        max-width: 1114px;
+        margin: 0 auto;
+    }
+    article {
+        background: #FFFFFE;
+        border-radius: 5px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+        padding-left: 43px;
+        padding-right: 25px;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .filter-person {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+        
+    
+}
