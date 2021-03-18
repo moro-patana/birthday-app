@@ -107,32 +107,38 @@ async function fetchPerson() {
         displayList();
     };
 
-    const searchPerson = (e) => {
-        const searchInput = filterLastNameInput.value;
-        const lowerCaseFilter = searchInput.toLowerCase();
-        // Filter the data to get the lastname and turn them into lowercase
-        const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
-        const filterHTML = storedHTML(filterLastName);
-        birthdayList.innerHTML = filterHTML;
-    }
-    const searchByBirthMonth = (e) => {
-        const searchMonth = filterMonthInput.value;
-        const lowerCaseMonth = searchMonth.toLowerCase();
-        // Filter the data to get the birthday and turn them into lowercase
-        const filterBirthMonth = data.filter(person => {
-            const birthdayMonth = new Date(person.birthday);
-            // stringify the birthdate
-            const stringDate = birthdayMonth
-                .toLocaleString('USA', { month: 'long' })
+    // const searchPerson = (e) => {
+    //     const searchInput = filterLastNameInput.value;
+    //     const lowerCaseFilter = searchInput.toLowerCase();
+    //     // Filter the data to get the lastname and turn them into lowercase
+    //     const filterLastName = data.filter(person => person.lastName.toLowerCase().includes(lowerCaseFilter));
+    //     const filterHTML = storedHTML(filterLastName);
+    //     birthdayList.innerHTML = filterHTML;
+    // }
+    // const searchByBirthMonth = (e) => {
+    //     const searchMonth = filterMonthInput.value;
+    //     const lowerCaseMonth = searchMonth.toLowerCase();
+    //     // Filter the data to get the birthday and turn them into lowercase
+    //     const filterBirthMonth = data.filter(person => {
+    //         const birthdayMonth = new Date(person.birthday);
+    //         // stringify the birthdate
+    //         const stringDate = birthdayMonth
+    //             .toLocaleString('USA', { month: 'long' })
 
-            return stringDate.toLowerCase().includes(lowerCaseMonth);
+    //         return stringDate.toLowerCase().includes(lowerCaseMonth);
 
-        })
+    //     })
+        const filterPeople = () => {
+            const nameFilter = filterLastNameInput.value.toLowerCase()
+            const monthFilter = Number(filterMonthInput.value)
+            console.log(monthFilter);
+            const filteredPeople = data.filter(person => (nameFilter ? person.lastName.toLowerCase().includes(nameFilter) : true) && (monthFilter ? new Date(person.birthday).getMonth() + 1 === monthFilter : true))
+            console.log(filteredPeople);
+            birthdayList.innerHTML = storedHTML(filteredPeople)
+        }
 
-        const filterMonthHTML = storedHTML(filterBirthMonth)
-        birthdayList.innerHTML = filterMonthHTML;
+        
 
-    }
 
 
     // Grab the edit button
@@ -141,9 +147,7 @@ async function fetchPerson() {
         if (editBtn) {
             e.preventDefault();
             const findArticle = e.target.closest('article');
-            // const btn = document.querySelector('.edit')
             const btn = findArticle.dataset.id
-            // const id = btn.value;
             editPopup(btn);
             // tbody.dispatchEvent(new CustomEvent('listUpdated'));
 
@@ -285,6 +289,7 @@ async function fetchPerson() {
 
     }
     const addList = (e) => {
+        e.preventDefault()
         if (e.target.closest('button.add')) {
             addListPopup();
         }
@@ -380,8 +385,8 @@ async function fetchPerson() {
     birthdayList.addEventListener('click', deletePerson);
     addBtn.addEventListener('click', addList);
     birthdayList.addEventListener('listUpdated', updateLocalStorage);
-    filterLastNameInput.addEventListener('input', searchPerson);
-    filterMonthInput.addEventListener('input', searchByBirthMonth)
+    filterLastNameInput.addEventListener('input', filterPeople);
+    filterMonthInput.addEventListener('input', filterPeople)
     // resetBtn.addEventListener('click', resetFilters);
 
 
