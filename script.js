@@ -20,7 +20,6 @@ async function destroyPopup(popup) {
 function calcutateDateToBirthday(personToCalculateBirthdate) {
     let birthdayDateTime = new Date(personToCalculateBirthdate.birthday);
     let birthDate = birthdayDateTime.getDate();
-    // let birthdateYear = birthdayDateTime.getFullYear();
     let birthMonth = birthdayDateTime.getMonth();
     let today = new Date();
     let yearNow = today.getFullYear();
@@ -82,14 +81,14 @@ async function fetchPerson() {
                 // Create table row
                 return `<article data-id="${person.id}">
                     <div class="profile-container">
-                        <img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/>
+                        <figure><img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></figure>
                         <div>
                             <p class="name">${person.lastName} ${person.firstName}</td>
-                            <p>Turns <b>${age}</b> on ${monthTable[birthMonth]} ${birthDate}<sup>${nth(birthDate)}</sup></p>
+                            <p class="age">Turns <b>${age}</b> on ${monthTable[birthMonth]} ${birthDate}<sup>${nth(birthDate)}</sup></p>
                         </div>
                     </div>
-                    <div>
-                        <span>In ${birthdayInDays} ${upComingBirthdayMessage}</span>
+                    <div class="days-container">
+                        <span class="days">In ${birthdayInDays} ${upComingBirthdayMessage}</span>
                         <div class="btn-container">
                             <div>
                                 <button type="button" class="btn edit" value="${person.id}">
@@ -136,22 +135,24 @@ async function fetchPerson() {
             const findArticle = e.target.closest('article');
             const btn = findArticle.dataset.id
             editPopup(btn);
-            // tbody.dispatchEvent(new CustomEvent('listUpdated'));
+            birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
 
         }
     }
     // Create an form html to edit the list 
     const editPopup = (id) => {
         console.log(id);
+        // const person = data.find(person => person.id == id);
         return new Promise(async function (resolve, reject) {
             const person = data.find(person => person.id == id);
             // Create form element to edit the list
             const maxDate = new Date().toISOString().slice(0, 10)
-            const formatDateBirthday = new Date(person.birthday).toISOString().slice(0, 10)
+            const formatDateBirthday = new Date(person?.birthday).toISOString().slice(0, 10)
             const popup = document.createElement(`form`);
             popup.classList.add('popup');
             popup.innerHTML = `
                 <div class="form-input">
+                <div class="form-close-btn"><button class="close-btn"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
                 <h2 class="person-name">Edit ${person.firstName} ${person.lastName}</h2>
                 <fieldset>
                 <label for="picture">Picture</label>
@@ -214,7 +215,7 @@ async function fetchPerson() {
                 person.lastName = popup.lastName.value;
                 person.firstName = popup.firstName.value,
                     person.birthday = popup.birthday.value,
-                    person.id = popup.id.value,
+                    person.id = popup.birthday.value,
 
                     destroyPopup(popup);
                 displayList(person);
@@ -284,11 +285,11 @@ async function fetchPerson() {
     }
     const addListPopup = (e) => {
         const maxDate = new Date().toISOString().slice(0, 10)
-        // const formatDateBirthday = new Date(person.birthday).toISOString().slice(0, 10)
-        const newPopupList = document.createElement(`form`);
+        const newPopupList = document.createElement(`div`);
         newPopupList.classList.add('AddListPopup');
         newPopupList.innerHTML = `
-            <div class="form-input">
+            <form class="form-input">
+            <div class="form-close-btn"><button class="close-btn"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
             <fieldset>
             <label for="profile">Picture</label>
             <input
@@ -329,10 +330,13 @@ async function fetchPerson() {
                 <button type="submit" class="save">Save</button>
                 <button type="button" class="cancel">Cancel</button>
                 </div>
-            </div>
+            </form>
 `;
         window.addEventListener('click', e => {
             if (e.target.closest('button.cancel')) {
+                destroyPopup(newPopupList);
+            }
+            if (e.target.closest('button.close-btn')) {
                 destroyPopup(newPopupList);
             }
         })
@@ -341,7 +345,7 @@ async function fetchPerson() {
         newPopupList.classList.add('open');
         newPopupList.addEventListener('submit', e => {
             e.preventDefault();
-            const form = e.currentTarget;
+            const form = e.target;
             const newList = {
                 picture: form.profile.value,
                 lastName: form.lastname.value,
