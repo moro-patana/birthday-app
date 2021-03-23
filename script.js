@@ -26,8 +26,7 @@ function calcutateDateToBirthday(personToCalculateBirthdate) {
     let birthdayYear = new Date(yearNow, birthMonth, birthDate);
     let aDay = 1000 * 60 * 60 * 24;
     let countDay = Math.ceil((birthdayYear.getTime() - today.getTime()) / aDay);
-    let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
-    return birthdayInDays;
+    return countDay;
 }
 
 // Fetch data from people.json
@@ -36,7 +35,12 @@ async function fetchPerson() {
     let data = await response.json();
     const storedHTML = (personList) => {
         const sortedPersonList = personList.sort((personA, personB) => {
-            return calcutateDateToBirthday(personA) - calcutateDateToBirthday(personB)
+            const sortedBirthdayA = normalizedBirthday(calcutateDateToBirthday(personA)) 
+            const sortedBirthdayB = normalizedBirthday(calcutateDateToBirthday(personB))
+            return sortedBirthdayA - sortedBirthdayB
+            function normalizedBirthday(numDays) {
+             return numDays < 0 ? numDays + 365 : numDays
+            }
         }) 
 
         // Map through the data
@@ -74,17 +78,19 @@ async function fetchPerson() {
                 }
                 // Calculate ages based on the birthday year
                 let today = new Date();
-                let age = (today.getFullYear() - birthdateYear) + 1;
-                let birthdayInDays = calcutateDateToBirthday(person)
+                let age = (today.getFullYear() - birthdateYear);
+                // let birthdayInDays = calcutateDateToBirthday(person)
+                let countDay = calcutateDateToBirthday(person)
+                let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
+                console.log(birthdayInDays);
                 let upComingBirthdayMessage = birthdayInDays > 1 ? "days" : "day"
-
                 // Create table row
                 return `<article data-id="${person.id}">
                     <div class="profile-container">
                         <figure><img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></figure>
                         <div>
                             <p class="name">${person.lastName} ${person.firstName}</td>
-                            <p class="age">Turns <b>${age}</b> on ${monthTable[birthMonth]} ${birthDate}<sup>${nth(birthDate)}</sup></p>
+                            <p class="age">Turns <b>${countDay < 0 ? age + 1 : age}</b> on ${monthTable[birthMonth]} ${birthDate}<sup>${nth(birthDate)}</sup></p>
                         </div>
                     </div>
                     <div class="days-container">
@@ -195,7 +201,7 @@ async function fetchPerson() {
                     />
                     </fieldset>
                     <div class="button">
-                    <button type="submit" class="save">Save</button>
+                    <button type="submit" class="save">Save changes</button>
                     <button type="button" class="cancel">Cancel</button>
                     </div>
                 </div>
@@ -327,7 +333,7 @@ async function fetchPerson() {
                 />
                 </fieldset>
                 <div class="button">
-                <button type="submit" class="save">Save</button>
+                <button type="submit" class="save">Submit</button>
                 <button type="button" class="cancel">Cancel</button>
                 </div>
             </form>
