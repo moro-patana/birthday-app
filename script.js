@@ -249,13 +249,15 @@ async function fetchPerson() {
 
 
     const deletePopup = (id) => {
+        const person = data.find(person => person.id == id);
         // create confirmation popup here
         return new Promise(async function (resolve) {
             const modal = document.createElement('div');
             modal.classList.add('modal');
             modal.innerHTML = `
                 <div class="delete-popup">
-                    <p class="confirm">Do you want to delete?</p>
+                <div class="form-close-btn"><button class="close-btn"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
+                    <p class="confirm">Do you want to delete <b>${person.lastName} ${person.firstName}</b>?</p>
                     <div class="confirm-btn">
                         <button class="yes">Yes</buton>
                         <button class="no">No</buton>
@@ -275,6 +277,11 @@ async function fetchPerson() {
             })
             window.addEventListener('click', e => {
                 if (e.target.closest('button.no')) {
+                    destroyPopup(modal);
+                }
+            })
+            window.addEventListener('click', e => {
+                if (e.target.closest('button.close-btn')) {
                     destroyPopup(modal);
                 }
             })
