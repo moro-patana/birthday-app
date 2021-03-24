@@ -55,6 +55,9 @@ select {
     border: none;
 }
 select {
+    background-image: url("./img/drop-down-arrow.svg");
+    background-repeat: no-repeat;
+    background-position: right;
     -moz-appearance:none; /* Firefox */
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
@@ -71,8 +74,6 @@ button:focus {
     background: #EF4565;
     border: none;
     border-radius: 5px;
-    font-size: 18px;
-    line-height: 21px;
     color: #FFFFFE;
 }
 .birthday-list {
@@ -140,7 +141,8 @@ b {
     height: 30px;
 }
 .popup,
-.AddListPopup {
+.AddListPopup,
+.modal {
         position: fixed;
         top: 0;
         left: 0;
@@ -166,7 +168,8 @@ button:focus {
     border: none;
     outline: none;
 }
-.form-input {
+.form-input,
+.delete-popup {
     position: fixed;
     top: 0;
     left: 0;
@@ -240,27 +243,13 @@ button:focus {
     border: 2px solid #5F6C7B;
     box-sizing: border-box;
 }
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    background-color: hsla(0, 100%, 3%, 0.5);
-    width: 100vw;
-    height: 100vh;
-    padding: 1rem;
-    border-radius: 10px;
+.confirm {
+    color: black;
+    font-size: 28px;
+    text-align: center;
 }
 .delete-popup {
-    background-color: white;
-    display: block;
-    padding-top: 50px;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-bottom: 50px;
-    border-radius: 20px;
+  bottom: 300px;
 }
 @media (min-width: 1140px) {
     h1 {
@@ -302,13 +291,22 @@ button:focus {
     .age {
         font-size: 28px;
     }
+    .container-form {
+        width: 779px;
+        height: 139px;
+    }
     .filter-person {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        gap: 35px;
     }
-    input{
+    input {
         width: 264px;
+        height: 50px;
+    }
+    select {
+        background-position: 239px 13px;
+        width: 282px;
         height: 50px;
     }
     .form-input {
