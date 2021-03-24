@@ -54,6 +54,11 @@ select {
     color: #5F6C7B;
     border: none;
 }
+select {
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+}
 input:focus,
 select:focus,
 button:focus {
