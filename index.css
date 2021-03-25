@@ -317,10 +317,12 @@ button:focus {
     padding-left: 264px;
     padding-bottom: 189px;
     position: fixed;
-    top: 161px;
     display: flex;
     flex-direction: column;
     gap: 11px;
+}
+.delete-popup {
+    top: 161px;
 }
 
     .add-newlist {
