@@ -79,12 +79,12 @@ async function fetchPerson() {
                 // Calculate ages based on the birthday year
                 let today = new Date();
                 let age = (today.getFullYear() - birthdateYear);
-                // let birthdayInDays = calcutateDateToBirthday(person)
                 let countDay = calcutateDateToBirthday(person)
                 let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
                 console.log(birthdayInDays);
-                let upComingBirthdayMessage = birthdayInDays > 1 ? "days" : "day"
-                // Create table row
+                let upComingBirthdayMessage = birthdayInDays > 1 ? `In ${birthdayInDays} days` : `In ${birthdayInDays} day`
+                let happyBirthday = birthdayInDays === 0 ? "Happy birthday!" : upComingBirthdayMessage
+                
                 return `<article data-id="${person.id}">
                     <div class="profile-container">
                         <figure><img class="profile" src="${person.picture}" alt="${person.firstName + ' ' + person.lastName}"/></figure>
@@ -94,7 +94,7 @@ async function fetchPerson() {
                         </div>
                     </div>
                     <div class="days-container">
-                        <span class="days">In ${birthdayInDays} ${upComingBirthdayMessage}</span>
+                        <span class="days">${happyBirthday}</span>
                         <div class="btn-container">
                             <div>
                                 <button type="button" class="btn edit" value="${person.id}">
