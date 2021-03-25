@@ -81,7 +81,7 @@ async function fetchPerson() {
                 let age = (today.getFullYear() - birthdateYear);
                 let countDay = calcutateDateToBirthday(person)
                 let birthdayInDays = countDay < 0 ? 365 + countDay : countDay
-                console.log(birthdayInDays);
+                // console.log(birthdayInDays);
                 let upComingBirthdayMessage = birthdayInDays > 1 ? `In ${birthdayInDays} days` : `In ${birthdayInDays} day`
                 let happyBirthday = birthdayInDays === 0 ? "Happy birthday!" : upComingBirthdayMessage
                 
@@ -363,9 +363,11 @@ async function fetchPerson() {
                 picture: form.profile.value,
                 lastName: form.lastname.value,
                 firstName: form.firstname.value,
-                birthday: form.birthdate.value,
+                birthday: new Date(form.birthdate.value).getTime(),
                 id: Date.now(),
             }
+            console.log(form.birthdate.value);
+            console.log(newList);
             data.push(newList);
             displayList(data);
             destroyPopup(newPopupList);
