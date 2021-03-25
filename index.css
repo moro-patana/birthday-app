@@ -251,7 +251,7 @@ button:focus {
 .delete-popup {
   bottom: 300px;
 }
-@media (min-width: 1140px) {
+@media (min-width: 768px) {
     h1 {
         font-size: 64px;
         line-height: 76px;
@@ -289,7 +289,8 @@ button:focus {
         font-size: 36px;
     }
     .age {
-        font-size: 28px;
+        font-size: 24px;
+        line-height: 28px;
     }
     .container-form {
         width: 779px;
@@ -316,6 +317,7 @@ button:focus {
     padding-left: 264px;
     padding-bottom: 189px;
     position: fixed;
+    top: 161px;
     display: flex;
     flex-direction: column;
     gap: 11px;
