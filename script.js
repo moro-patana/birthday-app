@@ -146,7 +146,6 @@ async function fetchPerson() {
     }
     // Create an form html to edit the list 
     const editPopup = (id) => {
-        console.log(id);
         // const person = data.find(person => person.id == id);
         return new Promise(async function (resolve, reject) {
             const person = data.find(person => person.id == id);
@@ -157,7 +156,7 @@ async function fetchPerson() {
             popup.classList.add('popup');
             popup.innerHTML = `
                 <div class="form-input">
-                <div class="form-close-btn"><button class="close-btn"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
+                <div class="form-close-btn"><button class="close-button"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
                 <h2 class="person-name">Edit ${person.firstName} ${person.lastName}</h2>
                 <fieldset>
                 <label for="picture">Picture</label>
@@ -200,8 +199,8 @@ async function fetchPerson() {
                     />
                     </fieldset>
                     <div class="button">
-                    <button type="submit" class="save">Save changes</button>
-                    <button type="button" class="cancel">Cancel</button>
+                    <button type="submit" class="save-button">Save changes</button>
+                    <button type="button" class="cancel-button">Cancel</button>
                     </div>
                 </div>
 `;
@@ -255,11 +254,11 @@ async function fetchPerson() {
             modal.classList.add('modal');
             modal.innerHTML = `
                 <div class="delete-popup">
-                <div class="form-close-btn"><button class="close-btn"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
+                <div class="form-close-btn"><button class="close-button"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
                     <p class="confirm">Do you want to delete <b>${person.lastName} ${person.firstName}</b>?</p>
                     <div class="confirm-btn">
-                        <button class="yes">Yes</buton>
-                        <button class="no">No</buton>
+                        <button class="yes-button">Yes</buton>
+                        <button class="no-button">No</buton>
                     </div>
                 </div>
                 `;
@@ -267,7 +266,7 @@ async function fetchPerson() {
             modal.classList.add('open');
             // Listen to the yes button and the no button
             window.addEventListener('click', (e) => {
-                if (e.target.closest('button.yes')) {
+                if (e.target.closest('button.yes-button')) {
                     const personToDelete = data.filter(person => person.id != id);
                     data = personToDelete;
                     displayList(personToDelete);
@@ -275,12 +274,12 @@ async function fetchPerson() {
                 }
             })
             window.addEventListener('click', e => {
-                if (e.target.closest('button.no')) {
+                if (e.target.closest('button.no-button')) {
                     destroyPopup(modal);
                 }
             })
             window.addEventListener('click', e => {
-                if (e.target.closest('button.close-btn')) {
+                if (e.target.closest('button.close-button')) {
                     destroyPopup(modal);
                 }
             })
@@ -301,7 +300,7 @@ async function fetchPerson() {
         newPopupList.classList.add('AddListPopup');
         newPopupList.innerHTML = `
             <form class="form-input">
-            <div class="form-close-btn"><button class="close-btn"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
+            <div class="form-close-btn"><button class="close-button"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
             <fieldset>
             <label for="profile">Picture</label>
             <input
@@ -339,16 +338,16 @@ async function fetchPerson() {
                 />
                 </fieldset>
                 <div class="button">
-                <button type="submit" class="save">Submit</button>
-                <button type="button" class="cancel">Cancel</button>
+                <button type="submit" class="save-button">Submit</button>
+                <button type="button" class="cancel-button">Cancel</button>
                 </div>
             </form>
 `;
         window.addEventListener('click', e => {
-            if (e.target.closest('button.cancel')) {
+            if (e.target.closest('button.cancel-button')) {
                 destroyPopup(newPopupList);
             }
-            if (e.target.closest('button.close-btn')) {
+            if (e.target.closest('button.close-button')) {
                 destroyPopup(newPopupList);
             }
         })

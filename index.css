@@ -120,8 +120,9 @@ b {
     gap: 30px;
 }
 .days {
+    font-weight: 500;
     font-size: 24px;
-    line-height: 28px;
+    line-height: 28.44px;
     color: #5F6C7B;
 }
 .btn-container {
@@ -160,7 +161,7 @@ b {
     display: flex;
     justify-content: flex-end;
 }
-.close-btn {
+.close-button {
     border: none;
     background-color: transparent;
 }
@@ -170,23 +171,25 @@ button:focus {
 }
 .form-input,
 .delete-popup {
+    width: 1079px;
+    height: 751px;
     position: fixed;
-    top: 0;
+    top: 16vh;
     left: 0;
     right: 0;
-    bottom: 20px;
+    bottom: 112px;
     background: white;
     color: white;
     transition: transform 0.2s;
     list-style: none;
-    padding-top: 4rem;
+    padding-top: 121px;
     padding-left: 1rem;
     padding-right: 1rem;
     display: flex;
     flex-direction: column;
     gap: 11px;
 }
-.close-btn {
+.close-button {
     position: absolute;
     top: 20px;
     right: 63.5px;
@@ -218,10 +221,10 @@ button:focus {
     flex-direction: row;
     justify-content: space-between;
 }
-.save,
-.cancel,
-.yes,
-.no {
+.save-button,
+.cancel-button,
+.yes-button,
+.no-button {
     font-size: 18px;
     line-height: 21px;
     width: 158px;
@@ -231,13 +234,13 @@ button:focus {
     width: 158px;
     height: 50px;
 }
-.save,
-.yes {
+.save-button,
+.yes-button {
     color: #FFFFFE;
     background-color: #EF4565;
 }
-.cancel,
-.no {
+.cancel-button,
+.no-button {
     color: #5F6C7B;
     background: #FFFFFF;
     border: 2px solid #5F6C7B;
@@ -258,7 +261,7 @@ button:focus {
     }
     h2 {
         font-size: 48px;
-        line-height: 57px;
+        line-height: 56.88px;
     }
     .container {
         max-width: 779px;
@@ -312,11 +315,11 @@ button:focus {
     }
     .form-input,
     .delete-popup {
+    position: fixed;
     max-width: 1079px;
     margin: 0 auto;
     padding-left: 264px;
     padding-bottom: 189px;
-    position: fixed;
     display: flex;
     flex-direction: column;
     gap: 11px;
