@@ -171,10 +171,8 @@ button:focus {
 }
 .form-input,
 .delete-popup {
-    width: 1079px;
-    height: 751px;
     position: fixed;
-    top: 16vh;
+    top: 15vh;
     left: 0;
     right: 0;
     bottom: 112px;
