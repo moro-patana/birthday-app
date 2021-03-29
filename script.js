@@ -204,7 +204,7 @@ async function fetchPerson() {
 `;
             // listen to the window and the cancel button
             window.addEventListener('click', e => {
-                if (e.target.closest('button.cancel')) {
+                if (e.target.closest('button.cancel-button')) {
                     destroyPopup(popup);
 
                 }
