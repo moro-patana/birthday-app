@@ -219,7 +219,6 @@ async function fetchPerson() {
                 person.lastName = popup.lastName.value;
                 person.firstName = popup.firstName.value,
                     person.birthday = popup.birthday.value,
-                    person.id = popup.birthday.value,
 
                     destroyPopup(popup);
                 displayList(person);
@@ -295,6 +294,7 @@ async function fetchPerson() {
 
     }
     const addListPopup = (e) => {
+        // const { v4: uuidv4 } = require('uuid');
         const maxDate = new Date().toISOString().slice(0, 10)
         const newPopupList = document.createElement(`div`);
         newPopupList.classList.add('AddListPopup');
@@ -358,11 +358,11 @@ async function fetchPerson() {
             e.preventDefault();
             const form = e.target;
             const newList = {
-                picture: form.profile.value,
+                id: Date.now(),
                 lastName: form.lastname.value,
                 firstName: form.firstname.value,
                 birthday: new Date(form.birthdate.value).getTime(),
-                id: Date.now(),
+                picture: form.profile.value,
             }
             data.push(newList);
             displayList(data);

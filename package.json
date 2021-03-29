@@ -1,7 +1,8 @@
 {
   "dependencies": {
+    "date-fns": "https://date-fns.org/v1.29.0/docs/differenceInYears",
     "regenerator-runtime": "^0.13.7",
-    "date-fns": "https://date-fns.org/v1.29.0/docs/differenceInYears"
+    "uuid": "^8.3.2"
   },
   "name": "birthday-app",
   "description": "Hey team! So the final project here will be a birthday list.",
