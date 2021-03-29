@@ -218,7 +218,7 @@ async function fetchPerson() {
                 person.firstName = popup.firstName.value,
                     person.birthday = popup.birthday.value,
 
-                    destroyPopup(popup);
+                destroyPopup(popup);
                 displayList(person);
                 birthdayList.dispatchEvent(new CustomEvent('listUpdated'));
 
@@ -298,7 +298,8 @@ async function fetchPerson() {
         newPopupList.classList.add('AddListPopup');
         newPopupList.innerHTML = `
             <form class="form-input">
-            <div class="form-close-btn"><button class="close-button"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
+            <div class="form-close-btn">
+            <button type="button" class="close-button"><img src="./img/close-btn.svg" alt="close button icon" /></button></div>
             <fieldset>
             <label for="profile">Picture</label>
             <input
@@ -347,6 +348,7 @@ async function fetchPerson() {
             }
             if (e.target.closest('button.close-button')) {
                 destroyPopup(newPopupList);
+                console.log(e.target);
             }
         })
 
