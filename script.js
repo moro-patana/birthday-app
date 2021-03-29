@@ -307,7 +307,7 @@ async function fetchPerson() {
                 type="url"
                 name="profile"
                 id="profile"
-                value="https://bit.ly/3mxlBiG"
+                placeholder="Type the image url"
             />
             </fieldset>
                 <fieldset>
@@ -316,7 +316,7 @@ async function fetchPerson() {
                         type="text"
                         name="lastname"
                         id="lastname"
-                        value="Manjaka"
+                        placeholder="Type your lastname"
                     />
                 </fieldset>
                 <fieldset>
@@ -325,7 +325,7 @@ async function fetchPerson() {
                     type="text"
                     name="firstname"
                     id="firstname"
-                    value="Delancy"
+                    placeholder="Type your firstname"
                 />
                 </fieldset>
                 <fieldset>
