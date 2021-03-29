@@ -121,14 +121,12 @@ async function fetchPerson() {
         const filterPeople = () => {
             const nameFilter = filterLastNameInput.value.toLowerCase()
             const monthFilter = Number(filterMonthInput.value)
-            console.log(monthFilter);
             const filteredPeople = data.filter(person => (nameFilter
-                 ? person.lastName.toLowerCase().includes(nameFilter) 
+                 ? person.lastName.toLowerCase().includes(nameFilter) ||  person.firstName.toLowerCase().includes(nameFilter) 
                  : true)
                   && (monthFilter
                      ? new Date(person.birthday).getMonth() + 1 === monthFilter 
                      : true))
-            console.log(filteredPeople);
             birthdayList.innerHTML = storedHTML(filteredPeople)
         }
 
