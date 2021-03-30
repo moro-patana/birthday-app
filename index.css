@@ -175,7 +175,7 @@ button:focus {
     top: 15vh;
     left: 0;
     right: 0;
-    bottom: 112px;
+    /* bottom: 112px; */
     background: white;
     color: white;
     transition: transform 0.2s;
