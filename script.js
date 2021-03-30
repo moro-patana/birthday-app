@@ -348,7 +348,6 @@ async function fetchPerson() {
             }
             if (e.target.closest('button.close-button')) {
                 destroyPopup(newPopupList);
-                console.log(e.target);
             }
         })
 
