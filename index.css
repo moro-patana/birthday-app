@@ -175,7 +175,7 @@ button:focus {
     top: 15vh;
     left: 0;
     right: 0;
-    /* bottom: 112px; */
+    bottom: 112px;
     background: white;
     color: white;
     transition: transform 0.2s;
@@ -313,14 +313,15 @@ button:focus {
     }
     .form-input,
     .delete-popup {
-    position: fixed;
-    max-width: 1079px;
-    margin: 0 auto;
-    padding-left: 264px;
-    padding-bottom: 189px;
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
+        position: fixed;
+        bottom: 0;
+        max-width: 1079px;
+        margin: 0 auto;
+        padding-left: 264px;
+        padding-bottom: 189px;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
 }
 
     .add-newlist {
